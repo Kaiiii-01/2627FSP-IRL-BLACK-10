@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorium Atom — Misi Kimia Kelas 10</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root{
+  --bg-deep: #0B1E28;
+  --bg-panel: #102B38;
+  --grid-line: rgba(207, 226, 226, 0.07);
+  --paper: #EFEAD8;
+  --proton: #E8613C;
+  --neutron: #8FA3B0;
+  --electron: #37C6C0;
+  --amber: #E0A458;
+  --danger: #E24B4B;
+  --good: #5FBF8F;
+  --text-hi: #F3EFE2;
+  --text-mid: #B9C7C6;
+}
+
+*{ box-sizing: border-box; }
+
+html,body{
+  margin:0; padding:0;
+  background: var(--bg-deep);
+  color: var(--text-hi);
+  font-family: 'IBM Plex Sans', sans-serif;
+  min-height:100vh;
+}
+
+body{
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 34px 34px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding: 28px 16px 60px;
+}
+
+.stage-frame{
+  width:100%;
+  max-width: 760px;
+}
+
+h1,h2,h3{
+  font-family:'Space Grotesk', sans-serif;
+  margin:0;
+}
+
+.mono{ font-family:'IBM Plex Mono', monospace; }
+
+/* HUD */
+.hud{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom: 1px solid rgba(239,234,216,0.15);
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.hud-title{
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  color: var(--amber);
+}
+.hud-stats{
+  display:flex;
+  gap: 18px;
+  align-items:center;
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 0.92rem;
+  color: var(--text-mid);
+}
+.hearts span{ color: var(--danger); margin-right:2px; letter-spacing:1px;}
+.score-val{ color: var(--amber); font-weight:600; }
+
+/* Panels */
+.panel{
+  background: var(--bg-panel);
+  border: 1px solid rgba(239,234,216,0.12);
+  padding: 26px;
+}
+
+.screen{ display:none; }
+.screen.active{ display:block; }
+
+/* Start screen */
+.hero-eyebrow{
+  color: var(--electron);
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  margin-bottom: 10px;
+}
+.hero-title{
+  font-size: 2.1rem;
+  line-height: 1.15;
+  margin-bottom: 14px;
+  color: var(--text-hi);
+}
+.hero-desc{
+  color: var(--text-mid);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 60ch;
+  margin-bottom: 22px;
+}
+.model-diagram{
+  display:flex;
+  justify-content:center;
+  margin: 26px 0;
+}
+.mission-list{
+  list-style: none;
+  margin: 0 0 26px;
+  padding:0;
+  display:grid;
+  gap: 10px;
+}
+.mission-list li{
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+  padding: 12px 14px;
+  border: 1px solid rgba(239,234,216,0.12);
+  background: rgba(239,234,216,0.03);
+}
+.mission-badge{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--bg-deep);
+  background: var(--electron);
+  padding: 2px 7px;
+  flex-shrink:0;
+  margin-top: 2px;
+}
+.mission-list b{ color: var(--text-hi); }
+.mission-list p{ margin: 2px 0 0; color: var(--text-mid); font-size: 0.9rem; }
+
+button{
+  font-family:'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor:pointer;
+  border: none;
+  transition: transform 0.08s ease, background 0.15s ease;
+}
+button:active{ transform: scale(0.97); }
+
+.btn-primary{
+  background: var(--amber);
+  color: var(--bg-deep);
+  padding: 13px 26px;
+  border: none;
+}
+.btn-primary:hover{ background:#eeb877; }
+.btn-ghost{
+  background: transparent;
+  color: var(--text-hi);
+  border: 1px solid rgba(239,234,216,0.3);
+  padding: 12px 22px;
+}
+.btn-ghost:hover{ border-color: var(--electron); color: var(--electron); }
+
+/* timer bar */
+.timer-track{
+  height: 6px;
+  width: 100%;
+  background: rgba(239,234,216,0.1);
+  margin-bottom: 20px;
+  overflow:hidden;
+}
+.timer-fill{
+  height:100%;
+  background: var(--electron);
+  width:100%;
+  transition: width 0.1s linear, background 0.3s ease;
+}
+
+/* Level 1: build atom */
+.notation-box{
+  display:flex;
+  justify-content:center;
+  margin-bottom: 26px;
+}
+.notation{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 3rem;
+  color: var(--text-hi);
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+}
+.notation .super{
+  font-size: 1rem;
+  vertical-align: super;
+  color: var(--proton);
+}
+.notation .sub{
+  font-size: 1rem;
+  vertical-align: sub;
+  color: var(--neutron);
+}
+.notation .charge{
+  font-size: 1.2rem;
+  vertical-align: super;
+  color: var(--electron);
+}
+.notation .stack{
+  display:inline-flex;
+  flex-direction:column;
+  line-height: 1;
+  margin-right: 4px;
+  align-items:flex-end;
+}
+.elem-name{
+  text-align:center;
+  color: var(--text-mid);
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.particle-row{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.particle-card{
+  border: 1px solid rgba(239,234,216,0.15);
+  padding: 16px 12px;
+  text-align:center;
+}
+.particle-card.proton{ border-top: 3px solid var(--proton); }
+.particle-card.neutron{ border-top: 3px solid var(--neutron); }
+.particle-card.electron{ border-top: 3px solid var(--electron); }
+.particle-label{
+  font-size: 0.78rem;
+  color: var(--text-mid);
+  margin-bottom: 10px;
+  font-family:'IBM Plex Mono', monospace;
+}
+.stepper{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+}
+.stepper button{
+  width: 34px; height: 34px;
+  background: rgba(239,234,216,0.08);
+  color: var(--text-hi);
+  font-size: 1.1rem;
+  border-radius: 0;
+}
+.stepper button:hover{ background: rgba(239,234,216,0.18); }
+.stepper .value{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 1.3rem;
+  min-width: 30px;
+}
+
+.feedback{
+  min-height: 24px;
+  text-align:center;
+  font-size: 0.92rem;
+  margin-bottom: 10px;
+  font-family:'IBM Plex Mono', monospace;
+}
+.feedback.ok{ color: var(--good); }
+.feedback.bad{ color: var(--danger); }
+
+.center-btn{ display:flex; justify-content:center; margin-top: 10px;}
+
+/* Level 2: classification */
+.bins{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.bin{
+  border: 1px dashed rgba(239,234,216,0.3);
+  padding: 12px 10px;
+  min-height: 90px;
+  text-align:center;
+}
+.bin h4{
+  font-family:'Space Grotesk';
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  margin-bottom: 8px;
+}
+.bin.drop-hover{ border-color: var(--electron); background: rgba(55,198,192,0.08); }
+.bin-items{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+.bin-chip{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  background: rgba(239,234,216,0.1);
+  padding: 3px 7px;
+}
+
+.item-pool{
+  display:flex;
+  justify-content:center;
+  margin-bottom: 18px;
+}
+.item-card{
+  padding: 14px 22px;
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  font-family:'Space Grotesk';
+  font-weight:600;
+  font-size: 1.1rem;
+  cursor:pointer;
+  user-select:none;
+}
+.item-desc{
+  text-align:center;
+  color: var(--text-mid);
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+  min-height: 20px;
+}
+
+.progress-dots{
+  display:flex;
+  gap: 5px;
+  justify-content:center;
+  margin-bottom: 4px;
+}
+.progress-dots span{
+  width: 7px; height:7px;
+  background: rgba(239,234,216,0.2);
+}
+.progress-dots span.done{ background: var(--good); }
+.progress-dots span.fail{ background: var(--danger); }
+.progress-dots span.current{ background: var(--electron); }
+
+/* Level 3: quiz */
+.q-text{
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin-bottom: 22px;
+  color: var(--text-hi);
+}
+.options{
+  display:grid;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.opt{
+  text-align:left;
+  padding: 14px 16px;
+  background: rgba(239,234,216,0.04);
+  border: 1px solid rgba(239,234,216,0.15);
+  color: var(--text-hi);
+  font-family:'IBM Plex Sans';
+  font-size: 0.95rem;
+}
+.opt:hover{ border-color: var(--electron); }
+.opt.correct{ border-color: var(--good); background: rgba(95,191,143,0.12); }
+.opt.wrong{ border-color: var(--danger); background: rgba(226,75,75,0.12); }
+.opt:disabled{ cursor:default; }
+.explain{
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  border-left: 2px solid var(--electron);
+  padding-left: 12px;
+  margin-bottom: 18px;
+  display:none;
+}
+.explain.show{ display:block; }
+
+/* results */
+.rank-badge{
+  font-family:'Space Grotesk';
+  font-size: 1.6rem;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+.result-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 22px 0;
+}
+.result-grid div{
+  border: 1px solid rgba(239,234,216,0.15);
+  padding: 14px 8px;
+  text-align:center;
+}
+.result-grid .num{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 1.4rem;
+  color: var(--electron);
+  display:block;
+  margin-bottom: 4px;
+}
+.result-grid .lbl{ font-size: 0.75rem; color: var(--text-mid); }
+
+.footer-note{
+  margin-top: 22px;
+  font-size: 0.8rem;
+  color: var(--text-mid);
+  text-align:center;
+}
+
+@media (max-width: 480px){
+  .particle-row{ grid-template-columns: 1fr; }
+  .bins{ grid-template-columns: 1fr; }
+  .hero-title{ font-size: 1.6rem; }
+  .notation{ font-size: 2.2rem; }
+  .result-grid{ grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="stage-frame">
+
+  <div class="hud">
+    <div class="hud-title">LABORATORIUM ATOM</div>
+    <div class="hud-stats">
+      <div class="hearts" id="heartsDisplay">♥♥♥</div>
+      <div>SKOR <span class="score-val mono" id="scoreDisplay">0</span></div>
+    </div>
+  </div>
+
+  <!-- START SCREEN -->
+  <div class="screen active" id="screen-start">
+    <div class="panel">
+      <div class="hero-eyebrow">MISI KIMIA · STRUKTUR ATOM &amp; KLASIFIKASI MATERI</div>
+      <h1 class="hero-title">Kamu baru ditugaskan ke Laboratorium Atom.</h1>
+      <p class="hero-desc">Tiga stasiun kerja menunggu. Kamu akan merakit atom dari notasinya, memilah materi ke kategori yang tepat, lalu menghadapi kuis dari kepala laboratorium. Nyawamu ada tiga — jawaban salah mengurangi satu. Habis nyawa, misi gagal.</p>
+
+      <div class="model-diagram">
+        <svg width="180" height="180" viewBox="0 0 180 180">
+          <circle cx="90" cy="90" r="70" fill="none" stroke="rgba(239,234,216,0.15)" stroke-dasharray="2 4"/>
+          <ellipse cx="90" cy="90" rx="75" ry="30" fill="none" stroke="#37C6C0" stroke-width="1.5" transform="rotate(20 90 90)"/>
+          <ellipse cx="90" cy="90" rx="75" ry="30" fill="none" stroke="#37C6C0" stroke-width="1.5" transform="rotate(100 90 90)"/>
+          <circle cx="90" cy="90" r="12" fill="#E8613C"/>
+          <circle cx="83" cy="96" r="10" fill="#8FA3B0"/>
+          <circle cx="98" cy="83" r="9" fill="#E8613C"/>
+          <circle cx="163" cy="72" r="5" fill="#37C6C0"/>
+          <circle cx="30" cy="112" r="5" fill="#37C6C0"/>
+        </svg>
+      </div>
+
+      <ul class="mission-list">
+        <li><span class="mission-badge">01</span><div><b>Rakit Atom</b><p>Baca notasi isotop/ion, tentukan jumlah proton, neutron, dan elektron sebelum waktu habis.</p></div></li>
+        <li><span class="mission-badge">02</span><div><b>Klasifikasi Materi</b><p>Pilah unsur, senyawa, campuran homogen, dan campuran heterogen — beberapa contoh sengaja menjebak.</p></div></li>
+        <li><span class="mission-badge">03</span><div><b>Kuis Kepala Lab</b><p>10 soal analitis: konfigurasi elektron, massa atom relatif, isotop-isobar-isoton, dan lainnya.</p></div></li>
+      </ul>
+
+      <div class="center-btn">
+        <button class="btn-primary" onclick="startGame()">Mulai Misi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 1 -->
+  <div class="screen" id="screen-l1">
+    <div class="panel">
+      <div class="progress-dots" id="l1-dots"></div>
+      <div class="timer-track"><div class="timer-fill" id="l1-timer"></div></div>
+      <div class="elem-name" id="l1-elemname">Tentukan partikel penyusun atom berikut</div>
+      <div class="notation-box"><div class="notation" id="l1-notation"></div></div>
+
+      <div class="particle-row">
+        <div class="particle-card proton">
+          <div class="particle-label">PROTON (p⁺)</div>
+          <div class="stepper">
+            <button onclick="stepParticle('proton',-1)">−</button>
+            <span class="value mono" id="val-proton">0</span>
+            <button onclick="stepParticle('proton',1)">+</button>
+          </div>
+        </div>
+        <div class="particle-card neutron">
+          <div class="particle-label">NEUTRON (n⁰)</div>
+          <div class="stepper">
+            <button onclick="stepParticle('neutron',-1)">−</button>
+            <span class="value mono" id="val-neutron">0</span>
+            <button onclick="stepParticle('neutron',1)">+</button>
+          </div>
+        </div>
+        <div class="particle-card electron">
+          <div class="particle-label">ELEKTRON (e⁻)</div>
+          <div class="stepper">
+            <button onclick="stepParticle('electron',-1)">−</button>
+            <span class="value mono" id="val-electron">0</span>
+            <button onclick="stepParticle('electron',1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback" id="l1-feedback"></div>
+      <div class="center-btn">
+        <button class="btn-primary" onclick="submitAtom()">Kunci Jawaban</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 2 -->
+  <div class="screen" id="screen-l2">
+    <div class="panel">
+      <div class="progress-dots" id="l2-dots"></div>
+      <div class="timer-track"><div class="timer-fill" id="l2-timer"></div></div>
+      <div class="elem-name">Ketuk contoh materi, lalu ketuk kategori yang tepat</div>
+      <div class="item-pool"><div class="item-card" id="l2-item">—</div></div>
+      <div class="item-desc" id="l2-desc"></div>
+
+      <div class="bins">
+        <div class="bin" data-cat="unsur" onclick="chooseCategory('unsur')">
+          <h4>UNSUR</h4>
+          <div class="bin-items" id="bin-unsur"></div>
+        </div>
+        <div class="bin" data-cat="senyawa" onclick="chooseCategory('senyawa')">
+          <h4>SENYAWA</h4>
+          <div class="bin-items" id="bin-senyawa"></div>
+        </div>
+        <div class="bin" data-cat="homogen" onclick="chooseCategory('homogen')">
+          <h4>CAMPURAN HOMOGEN</h4>
+          <div class="bin-items" id="bin-homogen"></div>
+        </div>
+        <div class="bin" data-cat="heterogen" onclick="chooseCategory('heterogen')">
+          <h4>CAMPURAN HETEROGEN</h4>
+          <div class="bin-items" id="bin-heterogen"></div>
+        </div>
+      </div>
+      <div class="feedback" id="l2-feedback"></div>
+    </div>
+  </div>
+
+  <!-- LEVEL 3 -->
+  <div class="screen" id="screen-l3">
+    <div class="panel">
+      <div class="progress-dots" id="l3-dots"></div>
+      <div class="timer-track"><div class="timer-fill" id="l3-timer"></div></div>
+      <div class="q-text" id="l3-question"></div>
+      <div class="options" id="l3-options"></div>
+      <div class="explain" id="l3-explain"></div>
+      <div class="center-btn" id="l3-next-wrap" style="display:none;">
+        <button class="btn-primary" onclick="nextQuiz()">Lanjut</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="screen" id="screen-result">
+    <div class="panel" style="text-align:center;">
+      <div class="hero-eyebrow" id="result-status">MISI SELESAI</div>
+      <div class="rank-badge" id="result-rank">—</div>
+      <p class="hero-desc" style="margin:0 auto;" id="result-msg"></p>
+      <div class="result-grid">
+        <div><span class="num" id="res-score">0</span><span class="lbl">TOTAL SKOR</span></div>
+        <div><span class="num" id="res-lives">0</span><span class="lbl">NYAWA TERSISA</span></div>
+        <div><span class="num" id="res-acc">0%</span><span class="lbl">AKURASI KUIS</span></div>
+      </div>
+      <button class="btn-ghost" onclick="location.reload()">Ulangi Misi</button>
+    </div>
+    <div class="footer-note">Laboratorium Atom · Materi kimia kelas 10 — struktur atom &amp; klasifikasi materi</div>
+  </div>
+
+</div>
+
+<script>
+// ---------- GLOBAL STATE ----------
+let lives = 3;
+let score = 0;
+
+function updateHUD(){
+  document.getElementById('scoreDisplay').textContent = score;
+  document.getElementById('heartsDisplay').textContent = '♥'.repeat(Math.max(lives,0)) + '♡'.repeat(3-Math.max(lives,0));
+}
+
+function loseLife(){
+  lives--;
+  updateHUD();
+  if(lives <= 0){
+    endGame(false);
+    return true;
+  }
+  return false;
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startGame(){
+  lives = 3; score = 0; updateHUD();
+  startLevel1();
+}
+
+// ============ LEVEL 1 : BUILD THE ATOM ============
+const atomChallenges = [
+  {name:"Oksigen-16 (netral)", symbol:"O", mass:16, protonNum:8, charge:0},
+  {name:"Natrium-23 (ion Na⁺)", symbol:"Na", mass:23, protonNum:11, charge:1},
+  {name:"Klor-35 (ion Cl⁻)", symbol:"Cl", mass:35, protonNum:17, charge:-1},
+  {name:"Karbon-14 (isotop, netral)", symbol:"C", mass:14, protonNum:6, charge:0},
+  {name:"Magnesium-24 (ion Mg²⁺)", symbol:"Mg", mass:24, protonNum:12, charge:2},
+  {name:"Belerang-32 (ion S²⁻)", symbol:"S", mass:32, protonNum:16, charge:-2},
+  {name:"Kalium-39 (ion K⁺)", symbol:"K", mass:39, protonNum:19, charge:1},
+  {name:"Aluminium-27 (ion Al³⁺)", symbol:"Al", mass:27, protonNum:13, charge:3},
+];
+let l1Index = 0;
+let l1Current = null;
+let l1Values = {proton:0, neutron:0, electron:0};
+let l1Timer = null;
+let l1TimeLeft = 0;
+const L1_DURATION = 28;
+
+function renderL1Dots(){
+  const wrap = document.getElementById('l1-dots');
+  wrap.innerHTML = '';
+  atomChallenges.forEach((_, i)=>{
+    const d = document.createElement('span');
+    if(i < l1Index) d.classList.add(window.l1Results[i] ? 'done' : 'fail');
+    else if(i === l1Index) d.classList.add('current');
+    wrap.appendChild(d);
+  });
+}
+window.l1Results = [];
+
+function startLevel1(){
+  l1Index = 0;
+  window.l1Results = [];
+  showScreen('screen-l1');
+  loadAtomChallenge();
+}
+
+function superscriptCharge(c){
+  if(c === 0) return '';
+  const num = Math.abs(c);
+  const numStr = num === 1 ? '' : num.toString();
+  return numStr + (c > 0 ? '+' : '–');
+}
+
+function loadAtomChallenge(){
+  l1Current = atomChallenges[l1Index];
+  l1Values = {proton:0, neutron:0, electron:0};
+  ['proton','neutron','electron'].forEach(p => document.getElementById('val-'+p).textContent = '0');
+  document.getElementById('l1-feedback').textContent = '';
+  document.getElementById('l1-feedback').className = 'feedback';
+  document.getElementById('l1-elemname').textContent = l1Current.name;
+
+  const notation = document.getElementById('l1-notation');
+  notation.innerHTML = `
+    <span class="stack">
+      <span class="super">${l1Current.mass}</span>
+      <span class="sub">${l1Current.protonNum}</span>
+    </span>
+    <span>${l1Current.symbol}</span>
+    <span class="charge">${superscriptCharge(l1Current.charge)}</span>
+  `;
+  renderL1Dots();
+  startL1Timer();
+}
+
+function startL1Timer(){
+  clearInterval(l1Timer);
+  l1TimeLeft = L1_DURATION * 10;
+  const fill = document.getElementById('l1-timer');
+  fill.style.width = '100%';
+  fill.style.background = 'var(--electron)';
+  l1Timer = setInterval(()=>{
+    l1TimeLeft--;
+    const pct = (l1TimeLeft / (L1_DURATION*10)) * 100;
+    fill.style.width = pct + '%';
+    if(pct < 30) fill.style.background = 'var(--danger)';
+    if(l1TimeLeft <= 0){
+      clearInterval(l1Timer);
+      handleAtomResult(false, true);
+    }
+  }, 100);
+}
+
+function stepParticle(type, dir){
+  l1Values[type] = Math.max(0, l1Values[type] + dir);
+  document.getElementById('val-'+type).textContent = l1Values[type];
+}
+
+function submitAtom(){
+  clearInterval(l1Timer);
+  const correctNeutron = l1Current.mass - l1Current.protonNum;
+  const correctElectron = l1Current.protonNum - l1Current.charge;
+  const correct = (l1Values.proton === l1Current.protonNum) &&
+                   (l1Values.neutron === correctNeutron) &&
+                   (l1Values.electron === correctElectron);
+  handleAtomResult(correct, false);
+}
+
+function handleAtomResult(correct, timedOut){
+  const fb = document.getElementById('l1-feedback');
+  window.l1Results[l1Index] = correct;
+  if(correct){
+    score += 120;
+    fb.textContent = 'Tepat! Struktur atom sudah benar.';
+    fb.className = 'feedback ok';
+  } else {
+    const correctNeutron = l1Current.mass - l1Current.protonNum;
+    const correctElectron = l1Current.protonNum - l1Current.charge;
+    fb.textContent = (timedOut ? 'Waktu habis. ' : 'Belum tepat. ') +
+      `Seharusnya p=${l1Current.protonNum}, n=${correctNeutron}, e=${correctElectron}.`;
+    fb.className = 'feedback bad';
+  }
+  updateHUD();
+  renderL1Dots();
+
+  setTimeout(()=>{
+    if(!correct){
+      const gameOver = loseLife();
+      if(gameOver) return;
+    }
+    l1Index++;
+    if(l1Index >= atomChallenges.length){
+      startLevel2();
+    } else {
+      loadAtomChallenge();
+    }
+  }, 1400);
+}
+
+// ============ LEVEL 2 : CLASSIFY MATTER ============
+const matterItems = [
+  {label:"Emas (Au)", cat:"unsur", note:"Zat tunggal, terdiri dari satu jenis atom — emas adalah unsur logam."},
+  {label:"Air (H₂O)", cat:"senyawa", note:"Gabungan dua unsur (H dan O) dengan perbandingan tetap secara kimia."},
+  {label:"Udara", cat:"homogen", note:"Campuran gas-gas yang menyatu sempurna, komposisinya seragam di seluruh bagian."},
+  {label:"Air garam", cat:"homogen", note:"Garam larut sempurna dalam air sehingga campurannya seragam (larutan)."},
+  {label:"Pasir + air", cat:"heterogen", note:"Pasir tidak larut, komponennya masih bisa dibedakan dan dipisah dengan penyaringan."},
+  {label:"Besi (Fe)", cat:"unsur", note:"Satu jenis atom logam, tidak bisa diuraikan lagi secara kimia."},
+  {label:"Gula (C₁₂H₂₂O₁₁)", cat:"senyawa", note:"Tersusun dari unsur C, H, dan O dalam ikatan kimia tetap."},
+  {label:"Baja (paduan Fe+C)", cat:"homogen", note:"Alloy/paduan logam tergolong campuran homogen meski berupa padatan."},
+  {label:"Susu", cat:"heterogen", note:"Susu adalah koloid — partikel lemak tersebar tapi tidak benar-benar menyatu, tampak keruh, bisa memisah."},
+  {label:"Oksigen (O₂)", cat:"unsur", note:"Meski berupa molekul diatomik, O₂ tetap tergolong unsur karena hanya satu jenis atom."},
+  {label:"Karbon dioksida (CO₂)", cat:"senyawa", note:"Gabungan atom C dan O yang berikatan kimia tetap."},
+  {label:"Minyak + air", cat:"heterogen", note:"Minyak dan air tidak saling larut sehingga terlihat dua lapisan terpisah."},
+  {label:"Perunggu (Cu+Sn)", cat:"homogen", note:"Paduan logam tembaga dan timah, komposisinya menyatu merata."},
+  {label:"Larutan gula", cat:"homogen", note:"Gula larut merata dalam air membentuk larutan bening."},
+  {label:"Ozon (O₃)", cat:"unsur", note:"Tetap satu jenis atom (oksigen) meski bentuk molekulnya berbeda dari O₂ — disebut alotrop."},
+];
+let l2Order = [];
+let l2Index = 0;
+let l2Timer = null;
+let l2TimeLeft = 0;
+const L2_DURATION = 12;
+
+function shuffle(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function startLevel2(){
+  l2Order = shuffle(matterItems);
+  l2Index = 0;
+  ['unsur','senyawa','homogen','heterogen'].forEach(c => document.getElementById('bin-'+c).innerHTML = '');
+  showScreen('screen-l2');
+  loadMatterItem();
+}
+
+function renderL2Dots(){
+  const wrap = document.getElementById('l2-dots');
+  wrap.innerHTML = '';
+  l2Order.forEach((_, i)=>{
+    const d = document.createElement('span');
+    if(i < l2Index) d.classList.add(window.l2Results[i] ? 'done' : 'fail');
+    else if(i === l2Index) d.classList.add('current');
+    wrap.appendChild(d);
+  });
+}
+window.l2Results = [];
+
+function loadMatterItem(){
+  if(l2Index >= l2Order.length){
+    startLevel3();
+    return;
+  }
+  document.getElementById('l2-item').textContent = l2Order[l2Index].label;
+  document.getElementById('l2-desc').textContent = '';
+  document.getElementById('l2-feedback').textContent = '';
+  document.getElementById('l2-feedback').className = 'feedback';
+  renderL2Dots();
+  startL2Timer();
+}
+
+function startL2Timer(){
+  clearInterval(l2Timer);
+  l2TimeLeft = L2_DURATION * 10;
+  const fill = document.getElementById('l2-timer');
+  fill.style.width = '100%';
+  fill.style.background = 'var(--electron)';
+  l2Timer = setInterval(()=>{
+    l2TimeLeft--;
+    const pct = (l2TimeLeft / (L2_DURATION*10)) * 100;
+    fill.style.width = pct + '%';
+    if(pct < 30) fill.style.background = 'var(--danger)';
+    if(l2TimeLeft <= 0){
+      clearInterval(l2Timer);
+      handleMatterResult(false, true);
+    }
+  }, 100);
+}
+
+function chooseCategory(cat){
+  if(l2Index >= l2Order.length) return;
+  clearInterval(l2Timer);
+  const item = l2Order[l2Index];
+  const correct = item.cat === cat;
+  handleMatterResult(correct, false, item);
+}
+
+function handleMatterResult(correct, timedOut, item){
+  item = item || l2Order[l2Index];
+  window.l2Results[l2Index] = correct;
+  const fb = document.getElementById('l2-feedback');
+  const desc = document.getElementById('l2-desc');
+  desc.textContent = item.note;
+
+  if(correct){
+    score += 80;
+    fb.textContent = 'Benar!';
+    fb.className = 'feedback ok';
+    const catId = {unsur:'unsur',senyawa:'senyawa',homogen:'homogen',heterogen:'heterogen'}[item.cat];
+    const chip = document.createElement('span');
+    chip.className = 'bin-chip';
+    chip.textContent = item.label;
+    document.getElementById('bin-'+catId).appendChild(chip);
+  } else {
+    fb.textContent = timedOut ? 'Waktu habis.' : 'Belum tepat.';
+    fb.className = 'feedback bad';
+  }
+  updateHUD();
+  renderL2Dots();
+
+  setTimeout(()=>{
+    if(!correct){
+      const gameOver = loseLife();
+      if(gameOver) return;
+    }
+    l2Index++;
+    loadMatterItem();
+  }, 1600);
+}
+
+// ============ LEVEL 3 : QUIZ ============
+const quizQuestions = [
+  {
+    q: "Sebuah atom netral memiliki 15 elektron dan nomor massa 31. Berapa jumlah neutronnya?",
+    options: ["15","16","31","46"],
+    correct: 1,
+    explain: "Atom netral: elektron = proton = 15. Neutron = nomor massa − proton = 31 − 15 = 16."
+  },
+  {
+    q: "Ion X²⁻ memiliki 18 elektron. Berapa jumlah proton atom X yang netral?",
+    options: ["16","18","20","36"],
+    correct: 0,
+    explain: "Ion bermuatan −2 berarti kelebihan 2 elektron dibanding proton. Proton = 18 − 2 = 16."
+  },
+  {
+    q: "Unsur Klor memiliki dua isotop alami: Cl-35 (kelimpahan 75%, massa 35) dan Cl-37 (kelimpahan 25%, massa 37). Berapa massa atom relatif (Ar) Klor?",
+    options: ["35,0","35,5","36,0","36,5"],
+    correct: 1,
+    explain: "Ar = (0,75 × 35) + (0,25 × 37) = 26,25 + 9,25 = 35,5."
+  },
+  {
+    q: "Konfigurasi elektron unsur dengan nomor atom 17 (Cl) yang tepat adalah...",
+    options: ["2, 8, 7","2, 7, 8","2, 8, 8","8, 8, 1"],
+    correct: 0,
+    explain: "Kulit K maksimal 2, kulit L maksimal 8, sisanya di kulit M: 17 = 2 + 8 + 7."
+  },
+  {
+    q: "Dua atom disebut isotop apabila memiliki kesamaan pada...",
+    options: ["jumlah neutron","jumlah proton","nomor massa","jumlah elektron dan neutron"],
+    correct: 1,
+    explain: "Isotop = atom unsur sama (jumlah proton/nomor atom sama) tetapi jumlah neutron berbeda, sehingga nomor massanya berbeda."
+  },
+  {
+    q: "Atom P memiliki 20 proton dan 20 neutron, atom Q memiliki 19 proton dan 21 neutron. Hubungan P dan Q adalah...",
+    options: ["Isotop","Isobar","Isoton","Isomer"],
+    correct: 1,
+    explain: "Nomor massa P = 40 dan Q = 40 (sama), tetapi jumlah proton berbeda — ini disebut isobar."
+  },
+  {
+    q: "Manakah pernyataan yang paling tepat menggambarkan model atom Rutherford?",
+    options: [
+      "Atom adalah bola pejal bermuatan positif dengan elektron tersebar merata",
+      "Atom memiliki inti kecil bermuatan positif dan elektron mengelilinginya pada jarak relatif jauh",
+      "Elektron menempati orbital berbentuk awan probabilitas",
+      "Elektron mengelilingi inti pada lintasan dengan tingkat energi tertentu yang tetap"
+    ],
+    correct: 1,
+    explain: "Percobaan hamburan sinar alfa Rutherford menyimpulkan atom memiliki inti padat bermuatan positif, dikelilingi elektron pada ruang yang relatif kosong."
+  },
+  {
+    q: "Larutan gula dapat dipisahkan komponennya melalui metode...",
+    options: ["Filtrasi", "Destilasi/penguapan", "Dekantasi", "Sublimasi"],
+    correct: 1,
+    explain: "Karena gula larut sempurna (homogen), pemisahan dilakukan dengan menguapkan pelarutnya (destilasi/evaporasi), bukan penyaringan."
+  },
+  {
+    q: "Suatu atom memiliki notasi ₂₆⁵⁶Fe²⁺. Jumlah proton, neutron, dan elektronnya berturut-turut adalah...",
+    options: ["26, 30, 24","26, 30, 28","26, 26, 24","30, 26, 24"],
+    correct: 0,
+    explain: "Proton = nomor atom = 26. Neutron = 56 − 26 = 30. Elektron = 26 − 2 (karena ion 2+) = 24."
+  },
+  {
+    q: "Manakah kelompok berikut yang seluruhnya tergolong senyawa?",
+    options: [
+      "O₂, N₂, Fe",
+      "H₂O, CO₂, NaCl",
+      "Udara, air laut, kuningan",
+      "Emas, perak, tembaga"
+    ],
+    correct: 1,
+    explain: "H₂O, CO₂, dan NaCl semuanya tersusun dari dua unsur atau lebih yang berikatan kimia tetap — ciri khas senyawa."
+  }
+];
+let l3Index = 0;
+let l3Timer = null;
+let l3TimeLeft = 0;
+let l3CorrectCount = 0;
+const L3_DURATION = 22;
+let l3Answered = false;
+
+function startLevel3(){
+  l3Index = 0;
+  l3CorrectCount = 0;
+  showScreen('screen-l3');
+  loadQuizQuestion();
+}
+
+function renderL3Dots(){
+  const wrap = document.getElementById('l3-dots');
+  wrap.innerHTML = '';
+  quizQuestions.forEach((_, i)=>{
+    const d = document.createElement('span');
+    if(i < l3Index) d.classList.add(window.l3Results[i] ? 'done' : 'fail');
+    else if(i === l3Index) d.classList.add('current');
+    wrap.appendChild(d);
+  });
+}
+window.l3Results = [];
+
+function loadQuizQuestion(){
+  l3Answered = false;
+  const item = quizQuestions[l3Index];
+  document.getElementById('l3-question').textContent = `Soal ${l3Index+1}/${quizQuestions.length}. ${item.q}`;
+  document.getElementById('l3-explain').classList.remove('show');
+  document.getElementById('l3-next-wrap').style.display = 'none';
+  const optWrap = document.getElementById('l3-options');
+  optWrap.innerHTML = '';
+  item.options.forEach((opt, i)=>{
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.textContent = opt;
+    b.onclick = () => answerQuiz(i);
+    optWrap.appendChild(b);
+  });
+  renderL3Dots();
+  startL3Timer();
+}
+
+function startL3Timer(){
+  clearInterval(l3Timer);
+  l3TimeLeft = L3_DURATION * 10;
+  const fill = document.getElementById('l3-timer');
+  fill.style.width = '100%';
+  fill.style.background = 'var(--electron)';
+  l3Timer = setInterval(()=>{
+    l3TimeLeft--;
+    const pct = (l3TimeLeft / (L3_DURATION*10)) * 100;
+    fill.style.width = pct + '%';
+    if(pct < 30) fill.style.background = 'var(--danger)';
+    if(l3TimeLeft <= 0){
+      clearInterval(l3Timer);
+      answerQuiz(-1, true);
+    }
+  }, 100);
+}
+
+function answerQuiz(selected, timedOut){
+  if(l3Answered) return;
+  l3Answered = true;
+  clearInterval(l3Timer);
+  const item = quizQuestions[l3Index];
+  const buttons = document.querySelectorAll('#l3-options .opt');
+  buttons.forEach((b,i)=>{
+    b.disabled = true;
+    if(i === item.correct) b.classList.add('correct');
+    else if(i === selected) b.classList.add('wrong');
+  });
+  const correct = selected === item.correct;
+  window.l3Results[l3Index] = correct;
+  if(correct){
+    score += 150;
+    l3CorrectCount++;
+  }
+  document.getElementById('l3-explain').textContent = item.explain;
+  document.getElementById('l3-explain').classList.add('show');
+  document.getElementById('l3-next-wrap').style.display = 'flex';
+  updateHUD();
+  renderL3Dots();
+
+  if(!correct){
+    setTimeout(()=>{ loseLife(); }, 400);
+  }
+}
+
+function nextQuiz(){
+  if(lives <= 0) return;
+  l3Index++;
+  if(l3Index >= quizQuestions.length){
+    endGame(true);
+  } else {
+    loadQuizQuestion();
+  }
+}
+
+// ============ RESULTS ============
+function endGame(finished){
+  clearInterval(l1Timer); clearInterval(l2Timer); clearInterval(l3Timer);
+  showScreen('screen-result');
+  const status = document.getElementById('result-status');
+  const rank = document.getElementById('result-rank');
+  const msg = document.getElementById('result-msg');
+
+  document.getElementById('res-score').textContent = score;
+  document.getElementById('res-lives').textContent = Math.max(lives,0);
+  const acc = quizQuestions.length ? Math.round((l3CorrectCount / quizQuestions.length) * 100) : 0;
+  document.getElementById('res-acc').textContent = acc + '%';
+
+  if(!finished){
+    status.textContent = 'MISI GAGAL';
+    rank.textContent = 'Nyawa Habis';
+    msg.textContent = 'Reaksi di laboratorium berhenti karena kehabisan nyawa. Pelajari kembali catatanmu dan coba lagi — ahli kimia sejati belajar dari eksperimen yang gagal.';
+    return;
+  }
+
+  status.textContent = 'MISI SELESAI';
+  if(score >= 1600 && lives === 3){
+    rank.textContent = 'Kepala Laboratorium';
+    msg.textContent = 'Skor sempurna tanpa kehilangan nyawa. Pemahamanmu tentang atom dan materi setara ahli kimia profesional.';
+  } else if(score >= 1200){
+    rank.textContent = 'Asisten Peneliti Senior';
+    msg.textContent = 'Hasil yang solid! Sebagian besar konsep atom dan materi sudah kamu kuasai dengan baik.';
+  } else if(score >= 700){
+    rank.textContent = 'Asisten Laboratorium';
+    msg.textContent = 'Cukup baik, tapi masih ada beberapa konsep yang perlu diperkuat lagi, terutama soal notasi isotop dan ion.';
+  } else {
+    rank.textContent = 'Peserta Magang';
+    msg.textContent = 'Ini baru permulaan. Coba ulangi misi untuk memperkuat pemahamanmu tentang struktur atom dan klasifikasi materi.';
+  }
+}
+</script>
+</body>
+</html>
