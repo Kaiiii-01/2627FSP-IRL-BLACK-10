@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATOM RUSH — Kimia Kelas 10</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #07111f;
+    --panel: rgba(13, 29, 50, 0.92);
+    --panel2: rgba(19, 42, 70, 0.9);
+    --cyan: #28e7ff;
+    --blue: #527cff;
+    --purple: #a855f7;
+    --green: #31e981;
+    --yellow: #ffd84d;
+    --red: #ff5263;
+    --white: #eef8ff;
+    --muted: #8da7bd;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(40,231,255,.12), transparent 25%),
+        radial-gradient(circle at 80% 80%, rgba(168,85,247,.12), transparent 25%),
+        var(--bg);
+    color: var(--white);
+    font-family: Poppins, sans-serif;
+    overflow-x: hidden;
+}
+
+/* BACKGROUND */
+.bg-orb {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: .12;
+    pointer-events: none;
+}
+
+.orb1 {
+    background: var(--cyan);
+    top: -100px;
+    left: -100px;
+}
+
+.orb2 {
+    background: var(--purple);
+    bottom: -100px;
+    right: -100px;
+}
+
+.container {
+    width: min(1100px, 94%);
+    margin: auto;
+}
+
+/* HEADER */
+header {
+    padding: 22px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.logo {
+    font-family: Orbitron, sans-serif;
+    font-weight: 800;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    font-size: 20px;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.sound-btn {
+    border: 1px solid rgba(40,231,255,.3);
+    background: rgba(40,231,255,.08);
+    color: var(--cyan);
+    border-radius: 10px;
+    padding: 8px 13px;
+    cursor: pointer;
+}
+
+/* SCREENS */
+.screen {
+    display: none;
+    min-height: calc(100vh - 90px);
+    padding: 50px 0;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* HOME */
+.hero {
+    text-align: center;
+    max-width: 850px;
+    margin: 40px auto;
+}
+
+.atom-icon {
+    width: 140px;
+    height: 140px;
+    margin: auto;
+    position: relative;
+}
+
+.nucleus {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    top: 47px;
+    left: 47px;
+    box-shadow: 0 0 35px var(--cyan);
+}
+
+.orbit {
+    position: absolute;
+    border: 2px solid rgba(40,231,255,.55);
+    border-radius: 50%;
+    width: 130px;
+    height: 55px;
+    left: 5px;
+    top: 43px;
+}
+
+.o1 {
+    transform: rotate(0deg);
+}
+
+.o2 {
+    transform: rotate(60deg);
+}
+
+.o3 {
+    transform: rotate(-60deg);
+}
+
+.hero h1 {
+    font-family: Orbitron, sans-serif;
+    font-size: clamp(35px, 7vw, 70px);
+    margin: 20px 0 12px;
+    background: linear-gradient(90deg, var(--cyan), #fff, var(--purple));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero h2 {
+    font-size: 19px;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.hero p {
+    margin: 18px auto;
+    max-width: 700px;
+    color: #b5c8d7;
+    line-height: 1.8;
+}
+
+.btn {
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 14px 25px;
+    font-family: Poppins;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #06101c;
+    box-shadow: 0 0 25px rgba(40,231,255,.2);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,.06);
+    color: white;
+    border: 1px solid rgba(255,255,255,.12);
+}
+
+.home-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+/* INFO CARDS */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.info-card {
+    padding: 18px;
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.info-card strong {
+    display: block;
+    color: var(--cyan);
+    font-size: 22px;
+    font-family: Orbitron;
+}
+
+.info-card span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* GAME HEADER */
+.game-top {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,.08);
+    padding: 12px 15px;
+    border-radius: 12px;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-family: Orbitron;
+    font-size: 18px;
+    margin-top: 3px;
+}
+
+.progress-wrap {
+    text-align: center;
+}
+
+.progress-text {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.progress {
+    height: 8px;
+    background: #14273c;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    transition: .4s;
+}
+
+/* GAME CARD */
+.game-card {
+    background: linear-gradient(145deg, rgba(14,31,52,.97), rgba(7,20,36,.97));
+    border: 1px solid rgba(40,231,255,.12);
+    border-radius: 20px;
+    padding: clamp(20px,4vw,40px);
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: var(--cyan);
+    filter: blur(140px);
+    opacity: .04;
+    right: -100px;
+    top: -100px;
+}
+
+.level-title {
+    font-family: Orbitron;
+    color: var(--cyan);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.question {
+    font-size: clamp(19px,3vw,27px);
+    line-height: 1.5;
+    margin: 18px 0 25px;
+    font-weight: 600;
+}
+
+.question code {
+    color: var(--yellow);
+    background: rgba(255,216,77,.08);
+    padding: 3px 8px;
+    border-radius: 5px;
+}
+
+/* ANSWERS */
+.answers {
+    display: grid;
+    gap: 12px;
+}
+
+.answer {
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.1);
+    color: white;
+    padding: 16px;
+    text-align: left;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: Poppins;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.answer:hover {
+    border-color: var(--cyan);
+    background: rgba(40,231,255,.08);
+    transform: translateX(4px);
+}
+
+.answer.correct {
+    border-color: var(--green);
+    background: rgba(49,233,129,.12);
+}
+
+.answer.wrong {
+    border-color: var(--red);
+    background: rgba(255,82,99,.12);
+}
+
+.answer:disabled {
+    cursor: default;
+}
+
+/* MATCH GAME */
+.match-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.match-item {
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: rgba(255,255,255,.04);
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    min-height: 70px;
+}
+
+.match-item.selected {
+    border-color: var(--cyan);
+    background: rgba(40,231,255,.1);
+}
+
+.match-item.matched {
+    border-color: var(--green);
+    opacity: .5;
+}
+
+/* PARTICLE */
+.particle-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 270px;
+    position: relative;
+}
+
+.atom-display {
+    width: 220px;
+    height: 220px;
+    position: relative;
+}
+
+.big-nucleus {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    left: 75px;
+    top: 75px;
+    background: radial-gradient(circle at 35% 30%, #fff, var(--cyan) 20%, var(--blue));
+    box-shadow: 0 0 40px rgba(40,231,255,.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Orbitron;
+    font-size: 12px;
+}
+
+.electron {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--cyan);
+}
+
+.shell {
+    position: absolute;
+    border: 1px dashed rgba(255,255,255,.25);
+    border-radius: 50%;
+    left: 20px;
+    top: 20px;
+    width: 180px;
+    height: 180px;
+}
+
+.shell-inner {
+    left: 55px;
+    top: 55px;
+    width: 110px;
+    height: 110px;
+}
+
+/* TIMER */
+.timer {
+    width: 100%;
+    height: 8px;
+    background: #182c42;
+    border-radius: 10px;
+    margin: 15px 0 25px;
+    overflow: hidden;
+}
+
+.timer-bar {
+    height: 100%;
+    width: 100%;
+    background: var(--green);
+    transition: width 1s linear;
+}
+
+.timer-bar.warning {
+    background: var(--yellow);
+}
+
+.timer-bar.danger {
+    background: var(--red);
+}
+
+/* CONTROLS */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.hint {
+    margin-top: 15px;
+    padding: 13px;
+    border-radius: 10px;
+    background: rgba(255,216,77,.07);
+    border: 1px solid rgba(255,216,77,.2);
+    color: #ffe98b;
+    font-size: 13px;
+    display: none;
+}
+
+.hint.show {
+    display: block;
+}
+
+/* FEEDBACK */
+.feedback {
+    margin-top: 18px;
+    padding: 15px;
+    border-radius: 10px;
+    display: none;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.feedback.correct {
+    background: rgba(49,233,129,.08);
+    border: 1px solid rgba(49,233,129,.3);
+}
+
+.feedback.wrong {
+    background: rgba(255,82,99,.08);
+    border: 1px solid rgba(255,82,99,.3);
+}
+
+/* RESULT */
+.result {
+    text-align: center;
+    max-width: 700px;
+    margin: auto;
+}
+
+.result-icon {
+    font-size: 80px;
+    margin-bottom: 15px;
+}
+
+.result h1 {
+    font-family: Orbitron;
+    font-size: 38px;
+}
+
+.final-score {
+    font-family: Orbitron;
+    font-size: 55px;
+    color: var(--cyan);
+    margin: 20px 0;
+}
+
+.rank {
+    padding: 15px;
+    background: rgba(255,255,255,.05);
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.review {
+    margin-top: 25px;
+    text-align: left;
+}
+
+.review-item {
+    background: rgba(255,255,255,.04);
+    padding: 13px;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+/* LEVEL SELECT */
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.level {
+    padding: 20px 10px;
+    text-align: center;
+    border-radius: 14px;
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+.level-number {
+    font-family: Orbitron;
+    font-size: 27px;
+    color: var(--cyan);
+}
+
+.level small {
+    display: block;
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+/* TOAST */
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #10263d;
+    border: 1px solid rgba(40,231,255,.25);
+    padding: 12px 20px;
+    border-radius: 10px;
+    transition: .3s;
+    z-index: 100;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* RESPONSIVE */
+@media(max-width: 750px) {
+    .info-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .level-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .game-top {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .progress-wrap {
+        grid-column: 1/-1;
+        grid-row: 1;
+    }
+
+    .match-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+
+<div class="container">
+
+<header>
+    <div class="logo">ATOM<span>RUSH</span> ⚛</div>
+    <button class="sound-btn" id="soundBtn" onclick="toggleSound()">🔊 SOUND ON</button>
+</header>
+
+
+<!-- ================= HOME ================= -->
+
+<section id="home" class="screen active">
+
+    <div class="hero">
+
+        <div class="atom-icon">
+            <div class="orbit o1"></div>
+            <div class="orbit o2"></div>
+            <div class="orbit o3"></div>
+            <div class="nucleus"></div>
+        </div>
+
+        <h1>ATOM RUSH</h1>
+
+        <h2>Kimia Kelas 10 • Atom & Materi</h2>
+
+        <p>
+            Selamat datang di laboratorium virtual.
+            Uji pemahamanmu tentang atom, partikel subatom,
+            nomor atom, nomor massa, konfigurasi elektron,
+            unsur, senyawa, campuran, dan perubahan materi.
+        </p>
+
+        <div class="home-buttons">
+            <button class="btn btn-primary" onclick="startGame()">
+                ⚡ MULAI EKSPERIMEN
+            </button>
+
+            <button class="btn btn-secondary" onclick="showScreen('levels')">
+                📚 LIHAT LEVEL
+            </button>
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info-card">
+                <strong>5</strong>
+                <span>LEVEL</span>
+            </div>
+
+            <div class="info-card">
+                <strong>25</strong>
+                <span>CHALLENGE</span>
+            </div>
+
+            <div class="info-card">
+                <strong>3 ❤️</strong>
+                <span>NYAWA</span>
+            </div>
+
+            <div class="info-card">
+                <strong>∞</strong>
+                <span>REPLAY</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LEVEL SCREEN ================= -->
+
+<section id="levels" class="screen">
+
+    <div class="hero">
+
+        <h1 style="font-size:40px;">MISSION MAP</h1>
+
+        <p>
+            Setiap level menguji kemampuan berbeda.
+            Semakin jauh kamu pergi, semakin kompleks masalah yang diberikan.
+        </p>
+
+        <div class="level-grid">
+
+            <div class="level">
+                <div class="level-number">01</div>
+                <strong>PARTIKEL</strong>
+                <small>Proton, neutron, elektron</small>
+            </div>
+
+            <div class="level">
+                <div class="level-number">02</div>
+                <strong>ATOM</strong>
+                <small>Nomor atom & massa</small>
+            </div>
+
+            <div class="level">
+                <div class="level-number">03</div>
+                <strong>ELEKTRON</strong>
+                <small>Konfigurasi elektron</small>
+            </div>
+
+            <div class="level">
+                <div class="level-number">04</div>
+                <strong>MATERI</strong>
+                <small>Unsur, senyawa & campuran</small>
+            </div>
+
+            <div class="level">
+                <div class="level-number">05</div>
+                <strong>MASTER</strong>
+                <small>Analisis & jebakan konsep</small>
+            </div>
+
+        </div>
+
+        <div style="margin-top:30px;">
+            <button class="btn btn-primary" onclick="startGame()">
+                🚀 MULAI MISSION
+            </button>
+
+            <button class="btn btn-secondary" onclick="showScreen('home')">
+                ← KEMBALI
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= GAME ================= -->
+
+<section id="game" class="screen">
+
+    <div class="game-top">
+
+        <div class="stat-box">
+            <div class="stat-label">Score</div>
+            <div class="stat-value" id="score">0000</div>
+        </div>
+
+        <div class="progress-wrap">
+            <div class="progress-text" id="progressText">
+                Challenge 1 / 25
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="stat-box" style="text-align:right;">
+            <div class="stat-label">Nyawa</div>
+            <div class="stat-value" id="lives">❤️❤️❤️</div>
+        </div>
+
+    </div>
+
+    <div class="game-card">
+
+        <div class="level-title" id="levelTitle">
+            LEVEL 01 — PARTIKEL SUBATOM
+        </div>
+
+        <div class="timer">
+            <div class="timer-bar" id="timerBar"></div>
+        </div>
+
+        <div id="questionArea"></div>
+
+        <div class="hint" id="hint"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="controls">
+
+            <button class="btn btn-secondary" onclick="useHint()">
+                💡 HINT <span id="hintCount">(2)</span>
+            </button>
+
+            <button
+                class="btn btn-primary"
+                id="nextBtn"
+                style="display:none;"
+                onclick="nextQuestion()">
+                LANJUT →
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RESULT ================= -->
+
+<section id="result" class="screen">
+
+    <div class="result">
+
+        <div class="result-icon" id="resultIcon">🏆</div>
+
+        <h1 id="resultTitle">MISSION COMPLETE</h1>
+
+        <p style="color:var(--muted); margin-top:10px;">
+            Hasil eksperimenmu:
+        </p>
+
+        <div class="final-score" id="finalScore">
+            0000
+        </div>
+
+        <div class="rank" id="rank">
+            ATOMIC MASTER
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info-card">
+                <strong id="correctCount">0</strong>
+                <span>BENAR</span>
+            </div>
+
+            <div class="info-card">
+                <strong id="wrongCount">0</strong>
+                <span>SALAH</span>
+            </div>
+
+            <div class="info-card">
+                <strong id="accuracy">0%</strong>
+                <span>AKURASI</span>
+            </div>
+
+            <div class="info-card">
+                <strong id="bestScore">0</strong>
+                <span>BEST SCORE</span>
+            </div>
+
+        </div>
+
+        <div class="home-buttons">
+
+            <button class="btn btn-primary" onclick="startGame()">
+                🔄 MAIN LAGI
+            </button>
+
+            <button class="btn btn-secondary" onclick="showScreen('home')">
+                🏠 MENU UTAMA
+            </button>
+
+        </div>
+
+        <div class="review">
+
+            <h3>📋 Review Jawaban</h3>
+
+            <div id="reviewList"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =====================================================
+   ATOM RUSH
+   KIMIA KELAS 10
+===================================================== */
+
+
+/* ---------------- VARIABLES ---------------- */
+
+let currentQuestion = 0;
+let score = 0;
+let lives = 3;
+let hints = 2;
+let correct = 0;
+let wrong = 0;
+let combo = 0;
+let timer;
+let timeLeft = 20;
+let soundOn = true;
+
+let answersHistory = [];
+
+
+/* =====================================================
+   QUESTION DATABASE
+===================================================== */
+
+const questions = [
+
+/* ================= LEVEL 1 ================= */
+
+{
+level: 1,
+title: "LEVEL 01 — PARTIKEL SUBATOM",
+type: "choice",
+question:
+"Suatu atom netral memiliki nomor atom 17 dan nomor massa 37. Pernyataan manakah yang PALING tepat?",
+options: [
+"Memiliki 17 proton, 20 neutron, dan 17 elektron",
+"Memiliki 20 proton, 17 neutron, dan 20 elektron",
+"Memiliki 17 proton, 17 neutron, dan 20 elektron",
+"Memiliki 37 proton dan 17 elektron"
+],
+answer: 0,
+explanation:
+"Nomor atom = jumlah proton = 17. Karena atom netral, elektron juga 17. Neutron = 37 − 17 = 20."
+},
+
+{
+level: 1,
+title: "LEVEL 01 — PARTIKEL SUBATOM",
+type: "choice",
+question:
+"Partikel subatom yang menentukan identitas suatu unsur adalah...",
+options: [
+"Elektron",
+"Neutron",
+"Proton",
+"Elektron valensi"
+],
+answer: 2,
+explanation:
+"Jumlah proton disebut nomor atom dan menentukan identitas unsur."
+},
+
+{
+level: 1,
+title: "LEVEL 01 — PARTIKEL SUBATOM",
+type: "choice",
+question:
+"Atom X memiliki 13 proton dan 10 elektron. Berdasarkan data tersebut, X merupakan...",
+options: [
+"Atom netral",
+"Anion bermuatan 3−",
+"Kation bermuatan 3+",
+"Isotop"
+],
+answer: 2,
+explanation:
+"13 proton − 10 elektron = +3, sehingga atom tersebut merupakan kation 3+."
+},
+
+{
+level: 1,
+title: "LEVEL 01 — PARTIKEL SUBATOM",
+type: "choice",
+question:
+"Jika sebuah atom kehilangan 2 elektron, perubahan yang paling tepat adalah...",
+options: [
+"Jumlah proton berkurang 2",
+"Atom menjadi kation 2+",
+"Atom menjadi anion 2−",
+"Nomor atom bertambah 2"
+],
+answer: 1,
+explanation:
+"Kehilangan elektron membuat jumlah proton lebih banyak daripada elektron sehingga terbentuk kation."
+},
+
+{
+level: 1,
+title: "LEVEL 01 — PARTIKEL SUBATOM",
+type: "choice",
+question:
+"Dua atom memiliki jumlah proton sama tetapi jumlah neutron berbeda. Hubungan kedua atom tersebut adalah...",
+options: [
+"Isoton",
+"Isobar",
+"Isotop",
+"Ion"
+],
+answer: 2,
+explanation:
+"Isotop adalah atom-atom dari unsur yang sama dengan jumlah proton sama tetapi neutron berbeda."
+},
+
+
+/* ================= LEVEL 2 ================= */
+
+{
+level: 2,
+title: "LEVEL 02 — NOMOR ATOM & MASSA",
+type: "choice",
+question:
+"Atom A memiliki 19 proton dan 20 neutron. Atom B memiliki 19 proton dan 21 neutron. Pernyataan yang benar adalah...",
+options: [
+"A dan B merupakan unsur berbeda",
+"A dan B merupakan isotop",
+"A dan B merupakan isobar",
+"A dan B merupakan ion berbeda"
+],
+answer: 1,
+explanation:
+"Keduanya memiliki jumlah proton sama, tetapi neutron berbeda. Jadi keduanya merupakan isotop."
+},
+
+{
+level: 2,
+title: "LEVEL 02 — NOMOR ATOM & MASSA",
+type: "choice",
+question:
+"Suatu ion memiliki 16 proton, 18 elektron, dan 16 neutron. Nomor massa dan muatannya berturut-turut adalah...",
+options: [
+"32 dan 2−",
+"34 dan 2−",
+"32 dan 2+",
+"16 dan 2−"
+],
+answer: 0,
+explanation:
+"Nomor massa = proton + neutron = 16 + 16 = 32. Muatan = 16 − 18 = 2−."
+},
+
+{
+level: 2,
+title: "LEVEL 02 — NOMOR ATOM & MASSA",
+type: "choice",
+question:
+"Suatu spesies memiliki 12 proton, 12 neutron, dan 10 elektron. Manakah notasi yang tepat?",
+options: [
+"²⁴₁₂Mg²⁺",
+"²²₁₀Ne²⁺",
+"²⁴₁₀Ne²−",
+"¹²₂₄Mg²+"
+],
+answer: 0,
+explanation:
+"Z = 12 menunjukkan Mg. A = 12 + 12 = 24. Elektron 10 berarti muatan +2."
+},
+
+{
+level: 2,
+title: "LEVEL 02 — NOMOR ATOM & MASSA",
+type: "choice",
+question:
+"Pasangan berikut yang merupakan ISOBAR adalah...",
+options: [
+"¹²C dan ¹³C",
+"³⁵Cl dan ³⁷Cl",
+"⁴⁰Ar dan ⁴⁰Ca",
+"²³Na dan ²⁴Mg"
+],
+answer: 2,
+explanation:
+"Isobar mempunyai nomor massa sama tetapi nomor atom berbeda. Ar-40 dan Ca-40 memenuhi syarat tersebut."
+},
+
+{
+level: 2,
+title: "LEVEL 02 — NOMOR ATOM & MASSA",
+type: "choice",
+question:
+"Jika suatu atom netral memiliki 8 elektron pada kulit kedua dan 2 elektron pada kulit pertama, nomor atomnya adalah...",
+options: [
+"8",
+"10",
+"18",
+"20"
+],
+answer: 1,
+explanation:
+"Jumlah elektron = 2 + 8 = 10. Karena netral, jumlah elektron = jumlah proton = nomor atom."
+},
+
+
+/* ================= LEVEL 3 ================= */
+
+{
+level: 3,
+title: "LEVEL 03 — KONFIGURASI ELEKTRON",
+type: "choice",
+question:
+"Unsur dengan konfigurasi kulit 2, 8, 7 cenderung...",
+options: [
+"Menerima 1 elektron",
+"Melepaskan 7 elektron",
+"Menerima 7 elektron",
+"Tidak dapat membentuk ion"
+],
+answer: 0,
+explanation:
+"Elektron valensinya 7. Untuk mencapai kestabilan oktet, unsur tersebut cenderung menerima 1 elektron."
+},
+
+{
+level: 3,
+title: "LEVEL 03 — KONFIGURASI ELEKTRON",
+type: "choice",
+question:
+"Konfigurasi elektron atom dengan nomor atom 20 adalah...",
+options: [
+"2, 8, 8, 2",
+"2, 8, 10",
+"2, 18",
+"8, 8, 4"
+],
+answer: 0,
+explanation:
+"20 elektron tersusun pada kulit sebagai 2, 8, 8, 2."
+},
+
+{
+level: 3,
+title: "LEVEL 03 — KONFIGURASI ELEKTRON",
+type: "choice",
+question:
+"Unsur P memiliki konfigurasi 2, 8, 1. Ion yang paling mungkin terbentuk adalah...",
+options: [
+"P⁻",
+"P²⁻",
+"P⁺",
+"P²⁺"
+],
+answer: 2,
+explanation:
+"Elektron valensi hanya 1 sehingga lebih mudah melepaskan 1 elektron dan membentuk ion +1."
+},
+
+{
+level: 3,
+title: "LEVEL 03 — KONFIGURASI ELEKTRON",
+type: "choice",
+question:
+"Manakah pasangan yang memiliki jumlah elektron sama?",
+options: [
+"Na⁺ dan Ne",
+"Na dan Ne",
+"Cl⁻ dan Ne",
+"Mg dan Na⁺"
+],
+answer: 0,
+explanation:
+"Na memiliki 11 elektron, Na⁺ memiliki 10 elektron, dan Ne memiliki 10 elektron."
+},
+
+{
+level: 3,
+title: "LEVEL 03 — KONFIGURASI ELEKTRON",
+type: "choice",
+question:
+"Suatu ion X²⁻ mempunyai konfigurasi elektron 2, 8, 8. Nomor atom X adalah...",
+options: [
+"16",
+"18",
+"20",
+"14"
+],
+answer: 0,
+explanation:
+"Ion X²⁻ memiliki 18 elektron. Karena mendapat 2 elektron, atom netralnya memiliki 16 elektron/proton."
+},
+
+
+/* ================= LEVEL 4 ================= */
+
+{
+level: 4,
+title: "LEVEL 04 — MATERI",
+type: "choice",
+question:
+"Air garam yang tampak bening dan tidak dapat dibedakan komponen penyusunnya termasuk...",
+options: [
+"Unsur",
+"Senyawa",
+"Campuran homogen",
+"Campuran heterogen"
+],
+answer: 2,
+explanation:
+"Air garam tersusun dari lebih dari satu zat tetapi komposisinya seragam sehingga merupakan campuran homogen."
+},
+
+{
+level: 4,
+title: "LEVEL 04 — MATERI",
+type: "choice",
+question:
+"Manakah yang merupakan SENYAWA, bukan campuran?",
+options: [
+"Udara",
+"Air laut",
+"Air murni H₂O",
+"Larutan gula"
+],
+answer: 2,
+explanation:
+"H₂O memiliki komposisi tetap dan tersusun dari unsur H dan O yang berikatan secara kimia."
+},
+
+{
+level: 4,
+title: "LEVEL 04 — MATERI",
+type: "choice",
+question:
+"Campuran pasir dan air dapat dipisahkan terutama berdasarkan perbedaan...",
+options: [
+"Nomor atom",
+"Titik didih dan kelarutan",
+"Ukuran partikel",
+"Jumlah proton"
+],
+answer: 2,
+explanation:
+"Pasir tidak larut dalam air dan memiliki ukuran partikel yang jauh lebih besar sehingga dapat dipisahkan dengan filtrasi."
+},
+
+{
+level: 4,
+title: "LEVEL 04 — MATERI",
+type: "choice",
+question:
+"Manakah perubahan yang termasuk perubahan KIMIA?",
+options: [
+"Es mencair",
+"Air menguap",
+"Besi berkarat",
+"Gula larut dalam air"
+],
+answer: 2,
+explanation:
+"Perkaratan menghasilkan zat baru sehingga termasuk perubahan kimia."
+},
+
+{
+level: 4,
+title: "LEVEL 04 — MATERI",
+type: "choice",
+question:
+"Suatu zat memiliki sifat berikut: dapat diuraikan menjadi zat lain melalui reaksi kimia dan memiliki komposisi tetap. Zat tersebut adalah...",
+options: [
+"Unsur",
+"Senyawa",
+"Campuran homogen",
+"Campuran heterogen"
+],
+answer: 1,
+explanation:
+"Senyawa mempunyai komposisi tetap dan dapat diuraikan secara kimia menjadi unsur-unsur penyusunnya."
+},
+
+
+/* ================= LEVEL 5 ================= */
+
+{
+level: 5,
+title: "LEVEL 05 — ATOMIC MASTER",
+type: "choice",
+question:
+"Perhatikan pernyataan berikut:\n\nAtom X memiliki 17 proton, 18 neutron, dan 18 elektron.\n\nKesimpulan yang BENAR adalah...",
+options: [
+"X adalah atom netral dengan nomor massa 35",
+"X merupakan anion 1− dengan nomor massa 35",
+"X merupakan kation 1+ dengan nomor massa 35",
+"X merupakan isotop dengan nomor atom 18"
+],
+answer: 1,
+explanation:
+"Nomor massa = 17 + 18 = 35. Karena elektron 18 dan proton 17, muatannya −1."
+},
+
+{
+level: 5,
+title: "LEVEL 05 — ATOMIC MASTER",
+type: "choice",
+question:
+"Suatu unsur memiliki 3 kulit elektron dan 1 elektron valensi. Berdasarkan kecenderungan kestabilan, unsur tersebut paling mungkin...",
+options: [
+"Menerima 7 elektron",
+"Menerima 1 elektron",
+"Melepaskan 1 elektron",
+"Melepaskan 8 elektron"
+],
+answer: 2,
+explanation:
+"Unsur dengan 1 elektron valensi cenderung melepaskannya untuk mencapai konfigurasi stabil."
+},
+
+{
+level: 5,
+title: "LEVEL 05 — ATOMIC MASTER",
+type: "choice",
+question:
+"Dua spesies berikut memiliki jumlah elektron sama:\nA = Na⁺\nB = F⁻\n\nHubungan yang tepat adalah...",
+options: [
+"Keduanya isotop",
+"Keduanya isobar",
+"Keduanya isoelektronik",
+"Keduanya unsur yang sama"
+],
+answer: 2,
+explanation:
+"Na⁺ memiliki 10 elektron dan F⁻ juga memiliki 10 elektron. Spesies dengan jumlah elektron sama disebut isoelektronik."
+},
+
+{
+level: 5,
+title: "LEVEL 05 — ATOMIC MASTER",
+type: "choice",
+question:
+"Seorang siswa mengatakan: 'Jika suatu zat mengalami perubahan wujud, berarti telah terbentuk zat baru.' Evaluasi paling tepat terhadap pernyataan tersebut adalah...",
+options: [
+"Benar, karena semua perubahan menghasilkan zat baru",
+"Benar, karena perubahan wujud selalu merupakan reaksi kimia",
+"Salah, karena perubahan wujud merupakan perubahan fisika",
+"Salah, karena perubahan wujud hanya terjadi pada unsur"
+],
+answer: 2,
+explanation:
+"Perubahan wujud seperti mencair, membeku, dan menguap tidak menghasilkan zat baru sehingga termasuk perubahan fisika."
+},
+
+{
+level: 5,
+title: "LEVEL 05 — ATOMIC MASTER",
+type: "choice",
+question:
+"Suatu sampel mengandung zat A dan B. Zat tersebut dapat dipisahkan menggunakan metode fisika, dan perbandingan A:B tidak selalu sama. Sampel tersebut paling tepat dikategorikan sebagai...",
+options: [
+"Unsur",
+"Senyawa",
+"Campuran",
+"Atom"
+],
+answer: 2,
+explanation:
+"Campuran tersusun atas beberapa zat, perbandingannya dapat berubah, dan komponennya dapat dipisahkan secara fisika."
+}
+
+];
+
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+function startGame() {
+
+    currentQuestion = 0;
+    score = 0;
+    lives = 3;
+    hints = 2;
+    correct = 0;
+    wrong = 0;
+    combo = 0;
+    answersHistory = [];
+
+    updateStats();
+
+    showScreen("game");
+
+    loadQuestion();
+}
+
+
+/* =====================================================
+   SCREEN
+===================================================== */
+
+function showScreen(id) {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =====================================================
+   LOAD QUESTION
+===================================================== */
+
+function loadQuestion() {
+
+    clearInterval(timer);
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("levelTitle").textContent = q.title;
+
+    document.getElementById("progressText").textContent =
+        `Challenge ${currentQuestion + 1} / ${questions.length}`;
+
+    document.getElementById("progressBar").style.width =
+        `${(currentQuestion / questions.length) * 100}%`;
+
+    document.getElementById("hint").classList.remove("show");
+
+    document.getElementById("feedback").className = "feedback";
+
+    document.getElementById("nextBtn").style.display = "none";
+
+    renderQuestion(q);
+
+    startTimer();
+
+    updateStats();
+}
+
+
+/* =====================================================
+   RENDER QUESTION
+===================================================== */
+
+function renderQuestion(q) {
+
+    const area = document.getElementById("questionArea");
+
+    let html = `
+        <div class="question">
+            ${q.question.replace(/\n/g, "<br>")}
+        </div>
+
+        <div class="answers">
+    `;
+
+    q.options.forEach((option, index) => {
+
+        html += `
+            <button class="answer"
+                onclick="selectAnswer(${index})">
+                <b>${String.fromCharCode(65 + index)}.</b>
+                ${option}
+            </button>
+        `;
+
+    });
+
+    html += `</div>`;
+
+    area.innerHTML = html;
+}
+
+
+/* =====================================================
+   ANSWER
+===================================================== */
+
+function selectAnswer(selected) {
+
+    clearInterval(timer);
+
+    const q = questions[currentQuestion];
+
+    const buttons =
+        document.querySelectorAll(".answer");
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    const isCorrect = selected === q.answer;
+
+    buttons[q.answer].classList.add("correct");
+
+    if (!isCorrect) {
+        buttons[selected].classList.add("wrong");
+    }
+
+    if (isCorrect) {
+
+        correct++;
+        combo++;
+
+        let base = 100;
+
+        let timeBonus = Math.max(0, Math.floor(timeLeft * 3));
+
+        let comboBonus = Math.min(combo * 20, 100);
+
+        let earned = base + timeBonus + comboBonus;
+
+        score += earned;
+
+        showFeedback(
+            true,
+            `Benar! +${earned} poin<br><br>${q.explanation}`
+        );
+
+        playSound("correct");
+
+    } else {
+
+        wrong++;
+        combo = 0;
+        lives--;
+
+        showFeedback(
+            false,
+            `Kurang tepat!<br><br>${q.explanation}`
+        );
+
+        playSound("wrong");
+
+    }
+
+    answersHistory.push({
+        question: q.question,
+        correct: isCorrect,
+        correctAnswer: q.options[q.answer]
+    });
+
+    updateStats();
+
+    if (lives <= 0) {
+
+        setTimeout(() => {
+            finishGame(false);
+        }, 1500);
+
+        return;
+    }
+
+    document.getElementById("nextBtn").style.display = "block";
+}
+
+
+/* =====================================================
+   NEXT
+===================================================== */
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (currentQuestion >= questions.length) {
+
+        finishGame(true);
+
+    } else {
+
+        loadQuestion();
+
+    }
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function startTimer() {
+
+    timeLeft = 20;
+
+    const bar = document.getElementById("timerBar");
+
+    bar.style.width = "100%";
+    bar.className = "timer-bar";
+
+    timer = setInterval(() => {
+
+        timeLeft--;
+
+        const percentage = (timeLeft / 20) * 100;
+
+        bar.style.width = percentage + "%";
+
+        if (timeLeft <= 7) {
+            bar.classList.add("warning");
+        }
+
+        if (timeLeft <= 3) {
+            bar.classList.remove("warning");
+            bar.classList.add("danger");
+        }
+
+        if (timeLeft <= 0) {
+
+            clearInterval(timer);
+
+            timeoutAnswer();
+
+        }
+
+    }, 1000);
+}
+
+
+/* =====================================================
+   TIMEOUT
+===================================================== */
+
+function timeoutAnswer() {
+
+    const q = questions[currentQuestion];
+
+    const buttons =
+        document.querySelectorAll(".answer");
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    buttons[q.answer].classList.add("correct");
+
+    wrong++;
+    lives--;
+    combo = 0;
+
+    showFeedback(
+        false,
+        `⏱️ Waktu habis!<br><br>${q.explanation}`
+    );
+
+    answersHistory.push({
+        question: q.question,
+        correct: false,
+        correctAnswer: q.options[q.answer]
+    });
+
+    updateStats();
+
+    if (lives <= 0) {
+
+        setTimeout(() => finishGame(false), 1500);
+
+    } else {
+
+        document.getElementById("nextBtn").style.display = "block";
+
+    }
+}
+
+
+/* =====================================================
+   HINT
+===================================================== */
+
+function useHint() {
+
+    if (hints <= 0) {
+
+        showToast("Hint sudah habis!");
+
+        return;
+
+    }
+
+    const q = questions[currentQuestion];
+
+    hints--;
+
+    document.getElementById("hintCount").textContent =
+        `(${hints})`;
+
+    let hintText = "";
+
+    if (q.level === 1) {
+
+        hintText =
+            "💡 Ingat: nomor atom = jumlah proton. Atom netral memiliki proton = elektron.";
+
+    }
+
+    else if (q.level === 2) {
+
+        hintText =
+            "💡 Gunakan hubungan A = proton + neutron dan muatan = proton − elektron.";
+
+    }
+
+    else if (q.level === 3) {
+
+        hintText =
+            "💡 Perhatikan jumlah elektron valensi. Atom cenderung menuju konfigurasi stabil.";
+
+    }
+
+    else if (q.level === 4) {
+
+        hintText =
+            "💡 Tanya dirimu: apakah zat baru terbentuk? Apakah komponen campuran dapat dipisahkan secara fisika?";
+
+    }
+
+    else {
+
+        hintText =
+            "💡 Jangan hanya mencari jawaban yang terlihat familiar. Analisis semua data yang diberikan.";
+
+    }
+
+    const hint = document.getElementById("hint");
+
+    hint.innerHTML = hintText +
+        "<br><small>Hint mengurangi 25 poin dari skor berikutnya.</small>";
+
+    hint.classList.add("show");
+
+    score = Math.max(0, score - 25);
+
+    updateStats();
+
+    playSound("hint");
+}
+
+
+/* =====================================================
+   FEEDBACK
+===================================================== */
+
+function showFeedback(correctAnswer, text) {
+
+    const feedback =
+        document.getElementById("feedback");
+
+    feedback.className =
+        "feedback show " +
+        (correctAnswer ? "correct" : "wrong");
+
+    feedback.innerHTML =
+        (correctAnswer ? "✅ " : "❌ ") + text;
+}
+
+
+/* =====================================================
+   UPDATE STATS
+===================================================== */
+
+function updateStats() {
+
+    document.getElementById("score").textContent =
+        String(score).padStart(4, "0");
+
+    document.getElementById("lives").textContent =
+        "❤️".repeat(lives) +
+        "🖤".repeat(3 - lives);
+
+    document.getElementById("hintCount").textContent =
+        `(${hints})`;
+
+    document.getElementById("progressBar").style.width =
+        `${(currentQuestion / questions.length) * 100}%`;
+}
+
+
+/* =====================================================
+   FINISH
+===================================================== */
+
+function finishGame(completed) {
+
+    clearInterval(timer);
+
+    showScreen("result");
+
+    const accuracy =
+        Math.round((correct / questions.length) * 100);
+
+    let rank;
+
+    if (score >= 3000 && accuracy >= 90) {
+
+        rank = "⚛️ ATOMIC MASTER";
+
+    } else if (score >= 2300 && accuracy >= 80) {
+
+        rank = "🧪 CHEMISTRY EXPERT";
+
+    } else if (score >= 1700 && accuracy >= 65) {
+
+        rank = "🔬 LAB RESEARCHER";
+
+    } else if (score >= 1000) {
+
+        rank = "🧫 JUNIOR CHEMIST";
+
+    } else {
+
+        rank = "📚 CHEMISTRY TRAINEE";
+
+    }
+
+    document.getElementById("resultIcon").textContent =
+        completed ? "🏆" : "💥";
+
+    document.getElementById("resultTitle").textContent =
+        completed ? "MISSION COMPLETE" : "MISSION FAILED";
+
+    document.getElementById("finalScore").textContent =
+        score;
+
+    document.getElementById("rank").textContent =
+        rank;
+
+    document.getElementById("correctCount").textContent =
+        correct;
+
+    document.getElementById("wrongCount").textContent =
+        wrong;
+
+    document.getElementById("accuracy").textContent =
+        accuracy + "%";
+
+    let best =
+        Number(localStorage.getItem("atomRushBest") || 0);
+
+    if (score > best) {
+
+        best = score;
+
+        localStorage.setItem(
+            "atomRushBest",
+            best
+        );
+
+        showToast("🎉 NEW HIGH SCORE!");
+
+    }
+
+    document.getElementById("bestScore").textContent =
+        best;
+
+    renderReview();
+}
+
+
+/* =====================================================
+   REVIEW
+===================================================== */
+
+function renderReview() {
+
+    const list =
+        document.getElementById("reviewList");
+
+    list.innerHTML = "";
+
+    answersHistory.forEach((item, index) => {
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "review-item";
+
+        div.innerHTML = `
+            <strong>
+                ${item.correct ? "✅" : "❌"}
+                Challenge ${index + 1}
+            </strong>
+
+            <div style="margin-top:6px;">
+                ${item.question.substring(0,150)}
+                ${item.question.length > 150 ? "..." : ""}
+            </div>
+
+            <div style="margin-top:7px;color:var(--muted);">
+                Jawaban benar:
+                <span style="color:var(--cyan);">
+                    ${item.correctAnswer}
+                </span>
+            </div>
+        `;
+
+        list.appendChild(div);
+
+    });
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2000);
+}
+
+
+/* =====================================================
+   SOUND SYSTEM
+===================================================== */
+
+let audioContext;
+
+function getAudio() {
+
+    if (!audioContext) {
+
+        audioContext =
+            new (window.AudioContext ||
+            window.webkitAudioContext)();
+
+    }
+
+    return audioContext;
+}
+
+function playSound(type) {
+
+    if (!soundOn) return;
+
+    try {
+
+        const ctx = getAudio();
+
+        const osc = ctx.createOscillator();
+
+        const gain = ctx.createGain();
+
+        osc.connect(gain);
+
+        gain.connect(ctx.destination);
+
+        if (type === "correct") {
+
+            osc.frequency.value = 650;
+
+        } else if (type === "wrong") {
+
+            osc.frequency.value = 180;
+
+        } else {
+
+            osc.frequency.value = 400;
+
+        }
+
+        gain.gain.setValueAtTime(
+            0.08,
+            ctx.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            ctx.currentTime + .2
+        );
+
+        osc.start();
+
+        osc.stop(ctx.currentTime + .2);
+
+    } catch(e) {}
+
+}
+
+
+function toggleSound() {
+
+    soundOn = !soundOn;
+
+    document.getElementById("soundBtn").textContent =
+        soundOn ? "🔊 SOUND ON" : "🔇 SOUND OFF";
+
+}
+
+
+/* =====================================================
+   KEYBOARD CONTROLS
+===================================================== */
+
+document.addEventListener("keydown", function(e) {
+
+    if (!document.getElementById("game").classList.contains("active")) {
+        return;
+    }
+
+    const buttons =
+        document.querySelectorAll(".answer");
+
+    if (e.key >= "1" && e.key <= "4") {
+
+        const index = Number(e.key) - 1;
+
+        if (buttons[index] &&
+            !buttons[index].disabled) {
+
+            buttons[index].click();
+
+        }
+
+    }
+
+    if (e.key === "Enter") {
+
+        const next =
+            document.getElementById("nextBtn");
+
+        if (next.style.display !== "none") {
+
+            next.click();
+
+        }
+
+    }
+
+});
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+updateStats();
+
+</script>
+
+</body>
+</html>
