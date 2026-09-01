@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elemental Lab: Atomic Master</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .game-container {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 650px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid #334155;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .title {
+            font-size: 1.4rem;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+        .stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.95rem;
+        }
+        .stat-box {
+            background: #0f172a;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+        .card {
+            background-color: #0f172a;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #38bdf8;
+        }
+        .element-symbol {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #f43f5e;
+        }
+        .element-name {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+        .element-details {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: left;
+        }
+        label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        input {
+            background-color: #0f172a;
+            border: 1px solid #475569;
+            color: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+        }
+        input:focus {
+            border-color: #38bdf8;
+        }
+        .full-width {
+            grid-column: span 2;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #0369a1;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .feedback.correct {
+            background-color: #064e3b;
+            color: #34d399;
+            display: block;
+        }
+        .feedback.incorrect {
+            background-color: #7f1d1d;
+            color: #fca5a5;
+            display: block;
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+        .start-screen {
+            text-align: center;
+        }
+        .start-screen p {
+            margin-bottom: 20px;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div id="start-screen" class="screen active start-screen">
+        <h1 style="color: #38bdf8; margin-bottom: 15px;">Elemental Lab: Atomic Master</h1>
+        <p>Uji pemahaman Kimia Kelas 10 kamu tentang <b>Struktur Atom & Konfigurasi Elektron Kulit (K, L, M, N)</b>!</p>
+        <p>Kamu harus menghitung jumlah Proton, Neutron, Elektron, dan Konfigurasi Elektron dengan tepat sebelum waktu habis.</p>
+        <button onclick="startGame()">Mulai Permainan</button>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="header">
+            <div class="title">Elemental Lab</div>
+            <div class="stats">
+                <div class="stat-box">Skor: <span id="score">0</span></div>
+                <div class="stat-box">Waktu: <span id="timer">45</span>s</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="element-symbol" id="display-symbol">Na</div>
+            <div class="element-name" id="display-name">Natrium</div>
+            <div class="element-details">
+                <span>Nomor Atom (Z): <strong id="display-z">11</strong></span>
+                <span>Massa Atom (A): <strong id="display-a">23</strong></span>
+                <span>Muatan: <strong id="display-charge">0</strong></span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="field">
+                <label for="input-p">Jumlah Proton:</label>
+                <input type="number" id="input-p" placeholder="0">
+            </div>
+            <div class="field">
+                <label for="input-n">Jumlah Neutron:</label>
+                <input type="number" id="input-n" placeholder="0">
+            </div>
+            <div class="field">
+                <label for="input-e">Jumlah Elektron:</label>
+                <input type="number" id="input-e" placeholder="0">
+            </div>
+            <div class="field">
+                <label for="input-config">Konfigurasi Kulit (misal: 2,8,1):</label>
+                <input type="text" id="input-config" placeholder="2,8,1">
+            </div>
+        </div>
+
+        <button onclick="submitAnswer()">Kirim Jawaban</button>
+        <div id="feedback" class="feedback"></div>
+    </div>
+
+    <div id="end-screen" class="screen start-screen">
+        <h1 style="color: #f43f5e; margin-bottom: 15px;">Waktu Habis!</h1>
+        <p>Permainan selesai. Skor akhir kamu:</p>
+        <h2 id="final-score" style="font-size: 3rem; color: #38bdf8; margin-bottom: 20px;">0</h2>
+        <button onclick="startGame()">Main Lagi</button>
+    </div>
+</div>
+
+<script>
+    const elementsData = [
+        { name: "Hidrogen", symbol: "H", z: 1, a: 1, charge: 0, config: "1" },
+        { name: "Helium", symbol: "He", z: 2, a: 4, charge: 0, config: "2" },
+        { name: "Litium", symbol: "Li", z: 3, a: 7, charge: 0, config: "2,1" },
+        { name: "Berilium", symbol: "Be", z: 4, a: 9, charge: 0, config: "2,2" },
+        { name: "Boron", symbol: "B", z: 5, a: 11, charge: 0, config: "2,3" },
+        { name: "Karbon", symbol: "C", z: 6, a: 12, charge: 0, config: "2,4" },
+        { name: "Nitrogen", symbol: "N", z: 7, a: 14, charge: 0, config: "2,5" },
+        { name: "Oksigen", symbol: "O", z: 8, a: 16, charge: -2, config: "2,8" },
+        { name: "Fluorin", symbol: "F", z: 9, a: 19, charge: -1, config: "2,8" },
+        { name: "Natrium", symbol: "Na", z: 11, a: 23, charge: 1, config: "2,8" },
+        { name: "Magnesium", symbol: "Mg", z: 12, a: 24, charge: 2, config: "2,8" },
+        { name: "Aluminium", symbol: "Al", z: 13, a: 27, charge: 3, config: "2,8" },
+        { name: "Klorin", symbol: "Cl", z: 17, a: 35, charge: -1, config: "2,8,8" },
+        { name: "Kalium", symbol: "K", z: 19, a: 39, charge: 0, config: "2,8,8,1" },
+        { name: "Kalsium", symbol: "Ca", z: 20, a: 40, charge: 0, config: "2,8,8,2" },
+        { name: "Barium", symbol: "Br", z: 35, a: 80, charge: -1, config: "2,8,18,8" }
+    ];
+
+    let currentTarget = {};
+    let score = 0;
+    let timeLeft = 45;
+    let timerInterval = null;
+
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    function startGame() {
+        score = 0;
+        document.getElementById('score').innerText = score;
+        showScreen('game-screen');
+        nextQuestion();
+        
+        clearInterval(timerInterval);
+        timeLeft = 45;
+        document.getElementById('timer').innerText = timeLeft;
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer').innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                endGame();
+            }
+        }, 1000);
+    }
+
+    function nextQuestion() {
+        const randomIndex = Math.floor(Math.random() * elementsData.length);
+        currentTarget = elementsData[randomIndex];
+
+        document.getElementById('display-symbol').innerText = currentTarget.symbol;
+        document.getElementById('display-name').innerText = currentTarget.name;
+        document.getElementById('display-z').innerText = currentTarget.z;
+        document.getElementById('display-a').innerText = currentTarget.a;
+        
+        const chargeText = currentTarget.charge > 0 ? `+${currentTarget.charge}` : currentTarget.charge;
+        document.getElementById('display-charge').innerText = chargeText;
+
+        // Clear inputs
+        document.getElementById('input-p').value = '';
+        document.getElementById('input-n').value = '';
+        document.getElementById('input-e').value = '';
+        document.getElementById('input-config').value = '';
+        
+        const feedback = document.getElementById('feedback');
+        feedback.className = 'feedback';
+        feedback.innerText = '';
+    }
+
+    function submitAnswer() {
+        const pInput = parseInt(document.getElementById('input-p').value);
+        const nInput = parseInt(document.getElementById('input-n').value);
+        const eInput = parseInt(document.getElementById('input-e').value);
+        const configInput = document.getElementById('input-config').value.trim().replace(/\s+/g, '');
+
+        const correctP = currentTarget.z;
+        const correctN = currentTarget.a - currentTarget.z;
+        const correctE = currentTarget.z - currentTarget.charge;
+        const correctConfig = currentTarget.config;
+
+        const feedback = document.getElementById('feedback');
+
+        if (pInput === correctP && nInput === correctN && eInput === correctE && configInput === correctConfig) {
+            score += 10;
+            timeLeft += 5; // Bonus waktu jika benar
+            document.getElementById('score').innerText = score;
+            feedback.className = 'feedback correct';
+            feedback.innerText = 'Tepat Sekali! +10 Skor (+5 detik waktu bonus)';
+            setTimeout(nextQuestion, 1200);
+        } else {
+            feedback.className = 'feedback incorrect';
+            feedback.innerText = `Salah! Jawaban benar: P=${correctP}, N=${correctN}, E=${correctE}, Konfig=${correctConfig}`;
+        }
+    }
+
+    function endGame() {
+        document.getElementById('final-score').innerText = score;
+        showScreen('end-screen');
+    }
+</script>
+
+</body>
+</html>
