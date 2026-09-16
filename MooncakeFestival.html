@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Festival Kue Bulan · 中秋节</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Noto+Serif+SC:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+    background:#fffaf7;
+    color:#3b1717;
+    overflow-x:hidden;
+}
+
+/* ================= NAVBAR ================= */
+
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:1000;
+    background:rgba(115,0,0,.96);
+    padding:15px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 5px 20px rgba(80,0,0,.25);
+}
+
+.logo{
+    font-family:'Cinzel',serif;
+    color:white;
+    font-size:21px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#ffd6a5;
+}
+
+nav ul{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:500;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#ffd6a5;
+}
+
+/* ================= GENERAL ================= */
+
+section{
+    padding:100px 8%;
+    position:relative;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:55px;
+}
+
+.section-title h2{
+    font-family:'Cinzel',serif;
+    color:#850909;
+    font-size:36px;
+}
+
+.section-title p{
+    margin-top:10px;
+    color:#8c6464;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 75% 25%,rgba(255,220,180,.8),transparent 15%),
+        linear-gradient(135deg,#fff,#fff4ee 55%,#ffe9df);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+}
+
+.hero-content{
+    z-index:5;
+    max-width:850px;
+}
+
+.chinese{
+    font-family:'Noto Serif SC',serif;
+    color:#a90000;
+    font-size:25px;
+    letter-spacing:7px;
+}
+
+.hero h1{
+    font-family:'Cinzel',serif;
+    color:#7e0000;
+    font-size:65px;
+    margin:15px 0;
+    letter-spacing:4px;
+}
+
+.hero h2{
+    font-family:'Noto Serif SC',serif;
+    font-size:32px;
+    color:#b21c1c;
+}
+
+.hero p{
+    max-width:650px;
+    margin:20px auto;
+    color:#704c4c;
+    line-height:1.8;
+}
+
+.hero-button{
+    display:inline-block;
+    margin-top:20px;
+    padding:13px 30px;
+    background:#990000;
+    color:white;
+    border-radius:30px;
+    text-decoration:none;
+    transition:.3s;
+    box-shadow:0 8px 20px rgba(130,0,0,.25);
+}
+
+.hero-button:hover{
+    transform:translateY(-4px);
+    background:#bd1717;
+}
+
+/* ================= MOON ================= */
+
+.moon{
+    position:absolute;
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    background:#fff1bd;
+    right:9%;
+    top:17%;
+    box-shadow:0 0 60px rgba(255,194,77,.45);
+}
+
+.moon::before,
+.moon::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    background:#eadca8;
+    opacity:.45;
+}
+
+.moon::before{
+    width:35px;
+    height:35px;
+    left:45px;
+    top:55px;
+}
+
+.moon::after{
+    width:50px;
+    height:50px;
+    right:40px;
+    bottom:50px;
+}
+
+.moon2{
+    position:absolute;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:#fff8d9;
+    left:8%;
+    bottom:15%;
+    opacity:.7;
+}
+
+/* ================= LANTERNS ================= */
+
+.lantern{
+    position:absolute;
+    width:52px;
+    height:65px;
+    background:#b30000;
+    border-radius:28px;
+    box-shadow:0 0 20px rgba(180,0,0,.3);
+}
+
+.lantern::before{
+    content:"";
+    position:absolute;
+    width:20px;
+    height:8px;
+    background:#850000;
+    top:-7px;
+    left:16px;
+}
+
+.lantern::after{
+    content:"";
+    position:absolute;
+    width:4px;
+    height:35px;
+    background:#d39b36;
+    bottom:-35px;
+    left:24px;
+}
+
+.lantern.one{
+    left:7%;
+    top:25%;
+    transform:rotate(-7deg);
+}
+
+.lantern.two{
+    right:5%;
+    bottom:15%;
+    transform:rotate(7deg);
+}
+
+.lantern.three{
+    left:20%;
+    top:17%;
+    transform:scale(.65);
+}
+
+/* ================= STARS ================= */
+
+.star{
+    position:absolute;
+    color:#d39b36;
+    font-size:20px;
+    animation:twinkle 2s infinite alternate;
+}
+
+.star.s1{top:20%;left:35%}
+.star.s2{top:35%;left:18%;animation-delay:.5s}
+.star.s3{top:70%;right:27%;animation-delay:1s}
+.star.s4{top:15%;right:30%;animation-delay:1.5s}
+
+@keyframes twinkle{
+    from{opacity:.3;transform:scale(.8)}
+    to{opacity:1;transform:scale(1.2)}
+}
+
+/* ================= MAKNA ================= */
+
+.meaning{
+    background:#fff;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.card{
+    background:white;
+    padding:35px 28px;
+    border-radius:20px;
+    border:1px solid #f1d5ce;
+    box-shadow:0 10px 30px rgba(100,0,0,.08);
+    transition:.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(100,0,0,.15);
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    width:80px;
+    height:80px;
+    background:#fff0e8;
+    border-radius:50%;
+    right:-25px;
+    bottom:-25px;
+}
+
+.icon{
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.card h3{
+    color:#900909;
+    margin-bottom:12px;
+}
+
+.card p{
+    color:#705858;
+    line-height:1.7;
+}
+
+/* ================= TRADISI ================= */
+
+.tradisi{
+    background:#fff2ec;
+}
+
+.tradisi-container{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.mooncake{
+    width:280px;
+    height:280px;
+    margin:auto;
+    border-radius:50%;
+    background:linear-gradient(145deg,#e8a94b,#bd6e20);
+    box-shadow:inset -15px -15px 30px rgba(90,35,0,.2),
+               15px 20px 30px rgba(90,35,0,.15);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+.mooncake::before{
+    content:"中秋";
+    font-family:'Noto Serif SC',serif;
+    font-size:40px;
+    color:#8b3d0c;
+    border:3px solid #9b4d16;
+    border-radius:50%;
+    padding:25px;
+}
+
+.tradisi-list{
+    display:grid;
+    gap:20px;
+}
+
+.tradisi-item{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    border-left:5px solid #a00000;
+    box-shadow:0 7px 20px rgba(100,0,0,.07);
+}
+
+.tradisi-item h3{
+    color:#900000;
+    margin-bottom:6px;
+}
+
+/* ================= SEJARAH ================= */
+
+.sejarah{
+    background:white;
+}
+
+.timeline{
+    max-width:900px;
+    margin:auto;
+    position:relative;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    width:3px;
+    background:#b10000;
+    top:0;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.timeline-item{
+    width:50%;
+    padding:20px 40px;
+    position:relative;
+}
+
+.timeline-item:nth-child(odd){
+    left:0;
+    text-align:right;
+}
+
+.timeline-item:nth-child(even){
+    left:50%;
+}
+
+.timeline-dot{
+    position:absolute;
+    width:18px;
+    height:18px;
+    background:#c40000;
+    border:4px solid white;
+    border-radius:50%;
+    top:35px;
+    box-shadow:0 0 0 3px #e5a23c;
+}
+
+.timeline-item:nth-child(odd) .timeline-dot{
+    right:-9px;
+}
+
+.timeline-item:nth-child(even) .timeline-dot{
+    left:-9px;
+}
+
+.timeline-box{
+    background:#fff5f0;
+    padding:22px;
+    border-radius:15px;
+}
+
+.timeline-box h3{
+    color:#940000;
+    margin-bottom:8px;
+}
+
+/* ================= CHANG'E ================= */
+
+.change-section{
+    background:
+        radial-gradient(circle at 15% 20%,rgba(255,220,180,.45),transparent 20%),
+        linear-gradient(135deg,#fff,#fff3ef);
+    overflow:hidden;
+}
+
+.change-container{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+    max-width:1100px;
+    margin:auto;
+}
+
+/* Ilustrasi Chang'e */
+
+.change-art{
+    height:480px;
+    background:linear-gradient(160deg,#870000,#c51d1d);
+    border-radius:30px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(100,0,0,.2);
+}
+
+.change-moon{
+    position:absolute;
+    width:270px;
+    height:270px;
+    border-radius:50%;
+    background:#fff0bd;
+    top:35px;
+    left:50%;
+    transform:translateX(-50%);
+    box-shadow:0 0 50px rgba(255,230,150,.5);
+}
+
+.change-moon::after{
+    content:"";
+    position:absolute;
+    width:35px;
+    height:35px;
+    background:#e4d49b;
+    border-radius:50%;
+    left:50px;
+    top:70px;
+    opacity:.5;
+}
+
+.change-hair{
+    position:absolute;
+    width:115px;
+    height:155px;
+    background:#221414;
+    border-radius:55% 55% 45% 45%;
+    top:125px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.change-face{
+    position:absolute;
+    width:82px;
+    height:105px;
+    background:#f3c4a5;
+    border-radius:45% 45% 50% 50%;
+    top:150px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:3;
+}
+
+.change-eye{
+    position:absolute;
+    width:7px;
+    height:4px;
+    background:#341818;
+    border-radius:50%;
+    top:47px;
+}
+
+.change-eye.left{
+    left:22px;
+}
+
+.change-eye.right{
+    right:22px;
+}
+
+.change-mouth{
+    position:absolute;
+    width:15px;
+    height:7px;
+    border-bottom:2px solid #9c3c3c;
+    border-radius:50%;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.change-crown{
+    position:absolute;
+    top:112px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:5;
+    font-size:45px;
+}
+
+.change-body{
+    position:absolute;
+    width:180px;
+    height:180px;
+    background:#f5e4dc;
+    border-radius:90px 90px 25px 25px;
+    top:245px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:2;
+}
+
+.change-sash{
+    position:absolute;
+    width:190px;
+    height:18px;
+    background:#bd1717;
+    top:65px;
+    left:-5px;
+    transform:rotate(-8deg);
+}
+
+.change-rabbit{
+    position:absolute;
+    font-size:55px;
+    right:25px;
+    bottom:20px;
+    filter:drop-shadow(0 5px 5px rgba(0,0,0,.2));
+}
+
+.change-cloud{
+    position:absolute;
+    color:white;
+    opacity:.2;
+    font-size:55px;
+}
+
+.cloud1{
+    left:20px;
+    top:40px;
+}
+
+.cloud2{
+    right:20px;
+    top:180px;
+}
+
+.change-text h3{
+    font-family:'Cinzel',serif;
+    font-size:35px;
+    color:#8e0000;
+    margin-bottom:5px;
+}
+
+.change-text .chinese-name{
+    font-family:'Noto Serif SC',serif;
+    color:#b31b1b;
+    font-size:25px;
+    margin-bottom:20px;
+}
+
+.change-text p{
+    line-height:1.8;
+    color:#674f4f;
+    margin-bottom:18px;
+}
+
+.fact-box{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.fact{
+    background:#fff;
+    border:1px solid #efd1ca;
+    padding:12px 17px;
+    border-radius:12px;
+}
+
+.fact strong{
+    display:block;
+    color:#900000;
+}
+
+/* ================= ACARA ================= */
+
+.acara{
+    background:#fff2ec;
+}
+
+.event-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+    max-width:1000px;
+    margin:auto;
+}
+
+.event{
+    min-height:180px;
+    background:white;
+    border-radius:22px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    border:1px solid #f0d1c9;
+    box-shadow:0 10px 25px rgba(100,0,0,.08);
+    transition:.3s;
+}
+
+.event:hover{
+    transform:scale(1.04) rotate(-1deg);
+}
+
+.event span{
+    font-size:42px;
+    display:block;
+    margin-bottom:10px;
+}
+
+.event h3{
+    color:#8e0000;
+}
+
+/* ================= QUIZ ================= */
+
+.quiz{
+    background:white;
+}
+
+.quiz-box{
+    max-width:750px;
+    margin:auto;
+    background:#8f0000;
+    color:white;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 20px 50px rgba(80,0,0,.2);
+}
+
+.quiz-box h3{
+    font-size:24px;
+    margin-bottom:25px;
+}
+
+.options{
+    display:grid;
+    gap:12px;
+}
+
+.option{
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:white;
+    color:#5c1111;
+    cursor:pointer;
+    font-family:'Poppins',sans-serif;
+    text-align:left;
+    transition:.3s;
+}
+
+.option:hover{
+    background:#ffe6d8;
+    transform:translateX(5px);
+}
+
+#result{
+    margin-top:20px;
+    font-weight:600;
+    text-align:center;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#620000;
+    color:white;
+    text-align:center;
+    padding:35px;
+}
+
+footer h3{
+    font-family:'Cinzel',serif;
+    margin-bottom:8px;
+}
+
+footer p{
+    opacity:.8;
+    font-size:13px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:850px){
+
+    nav ul{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .moon{
+        width:150px;
+        height:150px;
+        right:5%;
+        top:18%;
+        opacity:.5;
+    }
+
+    .cards,
+    .event-grid{
+        grid-template-columns:1fr;
+    }
+
+    .tradisi-container,
+    .change-container{
+        grid-template-columns:1fr;
+    }
+
+    .change-art{
+        height:430px;
+    }
+
+    .timeline::before{
+        left:10px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even){
+        width:100%;
+        left:0;
+        padding-left:40px;
+        text-align:left;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot{
+        left:1px;
+        right:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+    <div class="logo">
+        中秋节 <span>MOON FESTIVAL</span>
+    </div>
+
+    <ul>
+        <li><a href="#home">BERANDA</a></li>
+        <li><a href="#makna">MAKNA</a></li>
+        <li><a href="#tradisi">TRADISI</a></li>
+        <li><a href="#sejarah">SEJARAH</a></li>
+        <li><a href="#change">CHANG'E</a></li>
+        <li><a href="#acara">ACARA</a></li>
+        <li><a href="#quiz">QUIZ</a></li>
+    </ul>
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="moon"></div>
+    <div class="moon2"></div>
+
+    <div class="lantern one"></div>
+    <div class="lantern two"></div>
+    <div class="lantern three"></div>
+
+    <div class="star s1">✦</div>
+    <div class="star s2">✧</div>
+    <div class="star s3">✦</div>
+    <div class="star s4">✧</div>
+
+    <div class="hero-content">
+
+        <div class="chinese">中 秋 节</div>
+
+        <h1>FESTIVAL KUE BULAN</h1>
+
+        <h2>中秋节 · Zhōngqiū Jié</h2>
+
+        <p>
+            Festival Kue Bulan merupakan salah satu perayaan tradisional
+            Tionghoa yang identik dengan bulan purnama, kebersamaan keluarga,
+            dan kue bulan. Festival ini menjadi momen untuk berkumpul,
+            berbagi harapan, serta menikmati keindahan malam bersama.
+        </p>
+
+        <a href="#makna" class="hero-button">
+            JELAJAHI FESTIVAL ✦
+        </a>
+
+    </div>
+</section>
+
+
+<!-- ================= MAKNA ================= -->
+
+<section class="meaning" id="makna">
+
+    <div class="section-title">
+        <h2>Makna Festival</h2>
+        <p>Simbol dan nilai yang terdapat dalam Festival Kue Bulan</p>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">👨‍👩‍👧‍👦</div>
+            <h3>Kebersamaan Keluarga</h3>
+            <p>
+                Festival ini menjadi kesempatan bagi keluarga untuk
+                berkumpul dan menikmati waktu bersama.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🥮</div>
+            <h3>Kue Bulan</h3>
+            <p>
+                Bentuk kue bulan yang bulat melambangkan keutuhan,
+                persatuan, dan kebersamaan.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🏮</div>
+            <h3>Cahaya dan Harapan</h3>
+            <p>
+                Lentera menjadi simbol cahaya, harapan, serta doa
+                untuk masa depan yang baik.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ================= TRADISI ================= -->
+
+<section class="tradisi" id="tradisi">
+
+    <div class="section-title">
+        <h2>Tradisi</h2>
+        <p>Beberapa kegiatan yang menjadi bagian dari Festival Kue Bulan</p>
+    </div>
+
+    <div class="tradisi-container">
+
+        <div class="mooncake"></div>
+
+        <div class="tradisi-list">
+
+            <div class="tradisi-item">
+                <h3>🥮 Menikmati Kue Bulan</h3>
+                <p>
+                    Keluarga menikmati kue bulan sebagai simbol
+                    kebersamaan dan keutuhan.
+                </p>
+            </div>
+
+            <div class="tradisi-item">
+                <h3>🏮 Menyalakan Lentera</h3>
+                <p>
+                    Lentera digunakan sebagai dekorasi sekaligus
+                    melambangkan cahaya dan harapan.
+                </p>
+            </div>
+
+            <div class="tradisi-item">
+                <h3>🌕 Menikmati Bulan Purnama</h3>
+                <p>
+                    Keluarga berkumpul untuk menikmati keindahan
+                    bulan purnama.
+                </p>
+            </div>
+
+            <div class="tradisi-item">
+                <h3>🍵 Berkumpul Bersama</h3>
+                <p>
+                    Keluarga menghabiskan waktu bersama sambil
+                    menikmati makanan dan minuman.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ================= SEJARAH ================= -->
+
+<section class="sejarah" id="sejarah">
+
+    <div class="section-title">
+        <h2>Sejarah Festival</h2>
+        <p>Perjalanan Festival Kue Bulan dari masa ke masa</p>
+    </div>
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-box">
+                <h3>Awal Perkembangan</h3>
+                <p>
+                    Perayaan yang berkaitan dengan bulan dan hasil
+                    panen telah berkembang dalam kebudayaan Tionghoa
+                    sejak masa lampau.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-box">
+                <h3>Dinasti Tang</h3>
+                <p>
+                    Perayaan pertengahan musim gugur semakin berkembang
+                    dan menjadi kegiatan budaya yang dikenal luas.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-box">
+                <h3>Dinasti Song</h3>
+                <p>
+                    Perayaan semakin populer dan berbagai tradisi
+                    yang berkaitan dengan Festival Pertengahan Musim
+                    Gugur berkembang.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-box">
+                <h3>Masa Kini</h3>
+                <p>
+                    Festival Kue Bulan dirayakan di berbagai tempat
+                    melalui kegiatan keluarga, budaya, kuliner,
+                    dan pertunjukan.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ================= CHANG'E ================= -->
+
+<section class="change-section" id="change">
+
+    <div class="section-title">
+        <h2>Tokoh Legenda</h2>
+        <p>Chang'e · 嫦娥</p>
+    </div>
+
+    <div class="change-container">
+
+        <!-- Ilustrasi Chang'e tanpa foto -->
+        <div class="change-art">
+
+            <div class="change-moon"></div>
+
+            <div class="change-cloud cloud1">☁</div>
+            <div class="change-cloud cloud2">☁</div>
+
+            <div class="change-hair"></div>
+
+            <div class="change-face">
+                <div class="change-eye left"></div>
+                <div class="change-eye right"></div>
+                <div class="change-mouth"></div>
+            </div>
+
+            <div class="change-crown">👑</div>
+
+            <div class="change-body">
+                <div class="change-sash"></div>
+            </div>
+
+            <div class="change-rabbit">🐇</div>
+
+        </div>
+
+
+        <div class="change-text">
+
+            <h3>Chang'e</h3>
+
+            <div class="chinese-name">
+                嫦娥 · Cháng'é
+            </div>
+
+            <p>
+                Chang'e merupakan tokoh terkenal dalam legenda Tionghoa
+                yang sangat berkaitan dengan Festival Kue Bulan.
+                Dalam kisah yang populer, Chang'e dikisahkan berada
+                di Bulan setelah meminum ramuan keabadian.
+            </p>
+
+            <p>
+                Legenda Chang'e sering dikaitkan dengan keindahan bulan,
+                kerinduan, serta kisah yang diwariskan dari generasi
+                ke generasi. Karena itu, Chang'e menjadi salah satu
+                simbol yang sering muncul ketika Festival Pertengahan
+                Musim Gugur dirayakan.
+            </p>
+
+            <div class="fact-box">
+
+                <div class="fact">
+                    <strong>🌕 Simbol</strong>
+                    Bulan
+                </div>
+
+                <div class="fact">
+                    <strong>🐇 Pendamping</strong>
+                    Kelinci Giok
+                </div>
+
+                <div class="fact">
+                    <strong>📖 Kisah</strong>
+                    Legenda Tionghoa
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ================= ACARA ================= -->
+
+<section class="acara" id="acara">
+
+    <div class="section-title">
+        <h2>Acara Festival</h2>
+        <p>Berbagai kegiatan yang dapat menjadi bagian dari perayaan</p>
+    </div>
+
+    <div class="event-grid">
+
+        <div class="event">
+            <div>
+                <span>🥮</span>
+                <h3>Cooking Mooncake</h3>
+            </div>
+        </div>
+
+        <div class="event">
+            <div>
+                <span>🎭</span>
+                <h3>Student Performance</h3>
+            </div>
+        </div>
+
+        <div class="event">
+            <div>
+                <span>📖</span>
+                <h3>Storytelling</h3>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= QUIZ ================= -->
+
+<section class="quiz" id="quiz">
+
+    <div class="section-title">
+        <h2>Mini Quiz</h2>
+        <p>Uji pengetahuanmu tentang Festival Kue Bulan!</p>
+    </div>
+
+    <div class="quiz-box">
+
+        <h3 id="question">
+            Festival Kue Bulan juga dikenal sebagai festival apa?
+        </h3>
+
+        <div class="options">
+
+            <button class="option" onclick="answer(0)">
+                A. Festival Musim Semi
+            </button>
+
+            <button class="option" onclick="answer(1)">
+                B. Festival Pertengahan Musim Gugur
+            </button>
+
+            <button class="option" onclick="answer(0)">
+                C. Festival Lentera
+            </button>
+
+            <button class="option" onclick="answer(0)">
+                D. Festival Musim Panas
+            </button>
+
+        </div>
+
+        <div id="result"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h3>中秋节 · Festival Kue Bulan</h3>
+
+    <p>
+        Merayakan kebersamaan, budaya, cahaya, dan keindahan bulan.
+    </p>
+
+    <p style="margin-top:15px;">
+        © 2026 Moon Festival Website
+    </p>
+
+</footer>
+
+
+<script>
+
+/* ================= QUIZ ================= */
+
+function answer(choice){
+
+    const result = document.getElementById("result");
+
+    if(choice === 1){
+
+        result.innerHTML =
+        "🎉 Benar! Festival Kue Bulan juga dikenal sebagai Festival Pertengahan Musim Gugur.";
+
+    }else{
+
+        result.innerHTML =
+        "❌ Belum tepat. Jawaban yang benar adalah Festival Pertengahan Musim Gugur.";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
