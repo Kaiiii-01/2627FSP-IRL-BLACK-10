@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curriculum Vitae</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .cv-container {
+      width: 800px;
+      background-color: #ffffff;
+      display: flex;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    /* Column Kiri (Gelap) */
+    .left-column {
+      width: 38%;
+      background-color: #2e3538;
+      color: #ffffff;
+      padding: 40px 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .profile-photo {
+      width: 170px;
+      height: 170px;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 4px solid #ffffff;
+      overflow: hidden;
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .section-title-left {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 5px;
+    }
+
+    .contact-info p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #dddddd;
+      word-break: break-all;
+    }
+
+    .skills-list, .language-list {
+      list-style: none;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #dddddd;
+    }
+
+    /* Column Kanan (Terang) */
+    .right-column {
+      width: 62%;
+      background-color: #ffffff;
+      padding: 40px 35px;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .section-title-right {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #111111;
+    }
+
+    /* Timeline Styling */
+    .timeline {
+      position: relative;
+      padding-left: 25px;
+      border-left: 2px solid #333333;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .timeline-item {
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -31px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      background-color: #333333;
+      border-radius: 50%;
+    }
+
+    .date {
+      font-size: 13px;
+      font-weight: bold;
+      color: #555555;
+    }
+
+    .title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #111111;
+      margin-top: 2px;
+    }
+
+    .description {
+      font-size: 13px;
+      color: #666666;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cv-container">
+    <!-- Kolom Kiri -->
+    <div class="left-column">
+      <div class="contact-info">
+        <h2 class="section-title-left">Contact</h2>
+        <p>+62 0821 2115 3328</p>
+        <p>lynzie.kaneisha@penabur.sch.id</p>
+        <p>TKI 3 Ruko C no. 121</p>
+      </div>
+
+      <div class="profile-photo">
+        <!-- Ganti 'foto-profil.jpg' dengan nama berkas gambar Anda -->
+        <img src="foto-profil.jpg" alt="Foto Profil">
+      </div>
+
+      <div class="skills-info">
+        <h2 class="section-title-left">Skills</h2>
+        <ul class="skills-list">
+          <li>Time Management</li>
+          <li>Branding</li>
+          <li>Teamwork</li>
+          <li>Communication</li>
+          <li>Creativity</li>
+        </ul>
+      </div>
+
+      <div class="language-info">
+        <h2 class="section-title-left">Language</h2>
+        <ul class="language-list">
+          <li>English</li>
+          <li>Indonesian</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Kolom Kanan -->
+    <div class="right-column">
+      <div class="education-section">
+        <h2 class="section-title-right">Education</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="date">(2015-2017)</span>
+            <div class="title">TKK PENABUR HOLIS</div>
+          </div>
+          <div class="timeline-item">
+            <span class="date">(2017-2023)</span>
+            <div class="title">SDK PENABUR HOLIS</div>
+          </div>
+          <div class="timeline-item">
+            <span class="date">(2023-2026)</span>
+            <div class="title">SMPK PENABUR HOLIS</div>
+          </div>
+          <div class="timeline-item">
+            <span class="date">(2026)</span>
+            <div class="title">SMA PENABUR HOLIS</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="experience-section">
+        <h2 class="section-title-right">Experience</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="date">(2015-2026)</span>
+            <div class="title">EXTRACURRICULAR ACTIVITIES</div>
+            <div class="description">Penabur Holis<br>[specific club, innovation raft teams, monitor club, fine art club, etc.]</div>
+          </div>
+          <div class="timeline-item">
+            <span class="date">(2015-2026)</span>
+            <div class="title">TEAMWORK & COMMUNICATION</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
