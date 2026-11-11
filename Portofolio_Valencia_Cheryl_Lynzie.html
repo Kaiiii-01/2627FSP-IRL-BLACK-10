@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#e9e5dc">
+<title>Studio Archive — Projects & Portfolios</title>
+<style>
+  :root{
+    --paper:#e9e5dc;
+    --paper-light:#f4f1ea;
+    --ink:#242722;
+    --muted:#77796f;
+    --line:#d2cec4;
+    --olive:#777b63;
+    --olive-dark:#555b48;
+    --sand:#d6cbbb;
+    --white:#fbfaf6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:Inter, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  .shell{width:min(1240px, calc(100% - 64px));margin:auto}
+  .topbar{
+    height:82px;display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid var(--line);
+  }
+  .logo{font-size:13px;font-weight:850;letter-spacing:.19em;text-transform:uppercase}
+  .logo-mark{display:inline-grid;place-items:center;width:27px;height:27px;
+    margin-right:10px;border:1px solid var(--ink);border-radius:50%;font-size:12px}
+  .topbar nav{display:flex;gap:30px}
+  .topbar nav a{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);transition:color .2s}
+  .topbar nav a:hover{color:var(--ink)}
+  .hero{
+    display:grid;grid-template-columns:1.2fr .8fr;gap:30px;
+    padding:72px 0 58px;align-items:stretch;
+  }
+  .hero-copy{padding:15px 0 12px}
+  .overline{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--olive-dark);font-weight:800}
+  h1{font-family:Georgia, "Times New Roman", serif;font-weight:400;
+    font-size:clamp(54px,8vw,104px);line-height:.91;letter-spacing:-.065em;
+    margin:27px 0 24px;max-width:700px}
+  h1 em{font-weight:400;color:var(--olive);font-style:italic}
+  .hero-copy p{font-size:14px;line-height:1.8;color:var(--muted);max-width:440px;margin:0}
+  .hero-foot{display:flex;align-items:center;gap:14px;margin-top:35px}
+  .round-arrow{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--ink);border-radius:50%;font-size:18px}
+  .hero-foot span:last-child{font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:750}
+  .hero-art{
+    min-height:340px;background:var(--olive-dark);position:relative;overflow:hidden;
+    display:flex;align-items:flex-end;padding:28px;color:var(--white);
+  }
+  .hero-art:before,.hero-art:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.22);border-radius:50%}
+  .hero-art:before{width:390px;height:390px;right:-65px;top:-115px}
+  .hero-art:after{width:270px;height:270px;right:-5px;top:-55px}
+  .art-sun{position:absolute;width:125px;height:125px;border-radius:50%;background:#c9c1ad;right:75px;top:57px}
+  .art-line{position:absolute;width:1px;height:280px;background:rgba(255,255,255,.25);left:48%;top:28px;transform:rotate(38deg)}
+  .art-caption{position:relative;z-index:1}
+  .art-caption small{display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;opacity:.7;margin-bottom:9px}
+  .art-caption strong{font-family:Georgia,serif;font-weight:400;font-size:31px;line-height:1.08}
+  .art-index{position:absolute;right:25px;top:24px;font-size:10px;letter-spacing:.15em;color:rgba(255,255,255,.7)}
+  .intro-strip{
+    display:flex;justify-content:space-between;align-items:center;gap:20px;
+    padding:17px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);
+    font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted)
+  }
+  .intro-strip strong{color:var(--ink);font-weight:800}
+  .content{display:grid;grid-template-columns:220px 1fr;gap:54px;padding:62px 0 80px}
+  .side-label{position:sticky;top:25px;align-self:start}
+  .side-label .number{font-family:Georgia,serif;font-size:52px;color:var(--olive);line-height:1}
+  .side-label h2{font-family:Georgia,serif;font-weight:400;font-size:25px;line-height:1.15;margin:15px 0}
+  .side-label p{font-size:12px;line-height:1.7;color:var(--muted);max-width:175px}
+  .side-label .side-rule{width:36px;height:2px;background:var(--olive);margin-top:25px}
+  .category{margin-bottom:56px;scroll-margin-top:30px}
+  .category:last-child{margin-bottom:0}
+  .category-head{display:flex;justify-content:space-between;align-items:end;padding-bottom:14px;border-bottom:1px solid var(--ink);margin-bottom:0}
+  .category-head .eyebrow{font-size:9px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  .category-head h3{font-family:Georgia,serif;font-size:31px;font-weight:400;margin:0;letter-spacing:-.03em}
+  .category-head .total{font-size:10px;letter-spacing:.12em;color:var(--muted);padding-bottom:5px}
+  .project{
+    display:grid;grid-template-columns:54px minmax(0,1fr) 120px 25px;
+    align-items:center;gap:16px;padding:20px 8px;border-bottom:1px solid var(--line);
+    transition:background .2s,padding .2s;
+  }
+  .project:hover{background:rgba(255,255,255,.35);padding-left:16px;padding-right:14px}
+  .project-no{font-family:Georgia,serif;font-size:19px;color:#9b9b8d}
+  .project-main{min-width:0}
+  .project-title{font-family:Georgia,serif;font-size:20px;font-weight:400;margin:0 0 5px}
+  .project-desc{font-size:11px;color:var(--muted);line-height:1.5;margin:0}
+  .project-type{text-align:right;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--olive-dark);line-height:1.5}
+  .project-arrow{font-size:19px;color:var(--olive-dark);transition:transform .2s}
+  .project:hover .project-arrow{transform:translate(3px,-3px)}
+  .profile-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .profile{
+    background:var(--paper-light);border:1px solid var(--line);padding:20px 17px;
+    min-height:142px;display:flex;flex-direction:column;justify-content:space-between;
+    transition:transform .2s,background .2s;
+  }
+  .profile:hover{transform:translateY(-4px);background:var(--white)}
+  .profile .initial{font-family:Georgia,serif;font-size:25px;color:var(--olive)}
+  .profile strong{font-family:Georgia,serif;font-size:17px;font-weight:400}
+  .profile small{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+  .profile .profile-arrow{align-self:flex-end;font-size:17px;color:var(--olive-dark)}
+  footer{background:var(--ink);color:var(--paper);padding:30px 0}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:18px}
+  footer .foot-brand{font-family:Georgia,serif;font-size:22px}
+  footer small{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#aaa99e}
+  @media(max-width:800px){
+    .shell{width:min(100% - 36px,1240px)}
+    .hero{grid-template-columns:1fr;padding:54px 0 42px}
+    .hero-art{min-height:260px}
+    .content{grid-template-columns:1fr;gap:32px;padding-top:42px}
+    .side-label{position:static;display:grid;grid-template-columns:60px 1fr;column-gap:15px}
+    .side-label .number{grid-row:span 2}
+    .side-label h2{margin:0 0 5px}
+    .side-label p{max-width:420px;margin:0}
+    .side-label .side-rule{display:none}
+  }
+  @media(max-width:560px){
+    .shell{width:calc(100% - 28px)}
+    .topbar{height:auto;padding:20px 0;align-items:flex-start;gap:18px;flex-direction:column}
+    .topbar nav{gap:14px;flex-wrap:wrap}
+    .topbar nav a{font-size:9px}
+    .hero{padding-top:43px}
+    h1{font-size:62px}
+    .hero-art{min-height:225px}
+    .intro-strip{align-items:flex-start;flex-direction:column;gap:8px}
+    .project{grid-template-columns:30px minmax(0,1fr) 20px;gap:10px;padding:17px 4px}
+    .project-type{display:none}
+    .project-title{font-size:18px}
+    .project-desc{font-size:10px}
+    .profile-row{grid-template-columns:1fr}
+    .profile{min-height:105px;display:grid;grid-template-columns:48px 1fr 20px;align-items:center}
+    .profile .initial{grid-row:span 2}
+    .profile .profile-arrow{grid-column:3;grid-row:1 / span 2}
+    .footer-inner{align-items:flex-start;flex-direction:column}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <a class="logo" href="#top"><span class="logo-mark">S</span>Studio Archive</a>
+    <nav aria-label="Main navigation">
+      <a href="#science">Science & Learning</a>
+      <a href="#culture">Culture</a>
+      <a href="#innovation">AI & Innovation</a>
+      <a href="#people">Portfolios</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="overline">A curated collection · 2026</div>
+        <h1>Made with<br>curiosity<span>.</span><br><em>Shared with you.</em></h1>
+        <p>A home for ideas, experiments, creative projects, and the people behind them. Explore the collection by category.</p>
+        <a class="hero-foot" href="#collection"><span class="round-arrow">↓</span><span>Explore the collection</span></a>
+      </div>
+      <div class="hero-art" aria-label="Abstract neutral geometric artwork">
+        <div class="art-sun"></div><div class="art-line"></div>
+        <div class="art-index">COLLECTION / 001—007</div>
+        <div class="art-caption"><small>Projects & people</small><strong>Different ideas.<br>One shared space.</strong></div>
+      </div>
+    </section>
+
+    <div class="intro-strip" id="collection">
+      <span><strong>Eight links</strong> / Four categories</span>
+      <span>Browse · Discover · Connect</span>
+    </div>
+
+    <section class="content">
+      <aside class="side-label">
+        <div class="number">01</div>
+        <h2>The<br>collection</h2>
+        <p>Selected school projects and personal profiles, gathered in one place.</p>
+        <div class="side-rule"></div>
+      </aside>
+
+      <div class="categories">
+        <section class="category" id="science">
+          <div class="category-head">
+            <div><div class="eyebrow">Explore & experiment</div><h3>Science & Learning</h3></div>
+            <div class="total">03 PROJECTS</div>
+          </div>
+          <a class="project" href="https://kaiiii-01.github.io/2627FSP-IRL-BLACK-10/AtomRush-Valencia-Cheryl" target="_blank" rel="noopener noreferrer">
+            <div class="project-no">01</div><div class="project-main"><h4 class="project-title">Atom Rush</h4><p class="project-desc">An interactive chemistry game about atoms and matter.</p></div><div class="project-type">Chemistry<br>Game</div><div class="project-arrow">↗</div>
+          </a>
+          <a class="project" href="https://kaiiii-01.github.io/2627FSP-IRL-BLACK-10/LabotariumAtom-Valencia-Cheryl.html" target="_blank" rel="noopener noreferrer">
+            <div class="project-no">02</div><div class="project-main"><h4 class="project-title">Laboratorium Atom</h4><p class="project-desc">A chemistry learning experience focused on atomic concepts.</p></div><div class="project-type">Science<br>Learning</div><div class="project-arrow">↗</div>
+          </a>
+          <a class="project" href="https://share.gemini.google/D5Sdbgi3gPGZ" target="_blank" rel="noopener noreferrer">
+            <div class="project-no">03</div><div class="project-main"><h4 class="project-title">Gemini Project</h4><p class="project-desc">A shared project space. Open to explore the original content.</p></div><div class="project-type">Shared<br>Project</div><div class="project-arrow">↗</div>
+          </a>
+        </section>
+
+        <section class="category" id="culture">
+          <div class="category-head">
+            <div><div class="eyebrow">Stories & traditions</div><h3>Culture & Events</h3></div>
+            <div class="total">01 PROJECT</div>
+          </div>
+          <a class="project" href="https://kaiiii-01.github.io/2627FSP-IRL-BLACK-10/MooncakeFestival.html" target="_blank" rel="noopener noreferrer">
+            <div class="project-no">04</div><div class="project-main"><h4 class="project-title">Mooncake Festival</h4><p class="project-desc">Discover the history, meaning, and traditions of the Mid-Autumn Festival.</p></div><div class="project-type">Culture<br>Website</div><div class="project-arrow">↗</div>
+          </a>
+        </section>
+
+        <section class="category" id="innovation">
+          <div class="category-head">
+            <div><div class="eyebrow">Technology & everyday ideas</div><h3>AI & Innovation</h3></div>
+            <div class="total">01 PROJECT</div>
+          </div>
+          <a class="project" href="SmartFridgeAI.html">
+            <div class="project-no">05</div><div class="project-main"><h4 class="project-title">Smart Fridge AI</h4><p class="project-desc">An interactive app that identifies fridge ingredients and recommends recipes you can make.</p></div><div class="project-type">AI<br>Web App</div><div class="project-arrow">↗</div>
+          </a>
+        </section>
+
+        <section class="category" id="people">
+          <div class="category-head">
+            <div><div class="eyebrow">Meet the creators</div><h3>Personal Portfolios</h3></div>
+            <div class="total">03 PROFILES</div>
+          </div>
+          <div class="profile-row">
+            <a class="profile" href="https://kaiiii-01.github.io/2627FSP-IRL-BLACK-10/CV_Valencia_Adeline.html" target="_blank" rel="noopener noreferrer">
+              <span class="initial">V.</span><strong>Valencia Adeline</strong><small>Personal CV</small><span class="profile-arrow">↗</span>
+            </a>
+            <a class="profile" href="https://kaiiii-01.github.io/2627FSP-IRL-BLACK-10/CV_Cheryl.html" target="_blank" rel="noopener noreferrer">
+              <span class="initial">C.</span><strong>Cheryl</strong><small>Personal CV</small><span class="profile-arrow">↗</span>
+            </a>
+            <a class="profile" href="https://kaiiii-01.github.io/2627FSP-IRL-BLACK-10/CV_Lynzie.html" target="_blank" rel="noopener noreferrer">
+              <span class="initial">L.</span><strong>Lynzie</strong><small>Personal CV</small><span class="profile-arrow">↗</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+</div>
+<footer>
+  <div class="shell footer-inner">
+    <div class="foot-brand">Studio Archive</div>
+    <small>© 2026 · A shared collection of projects</small>
+  </div>
+</footer>
+</body>
+</html>
